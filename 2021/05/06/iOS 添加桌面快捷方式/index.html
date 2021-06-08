@@ -6,17 +6,31 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>今是昨非的博客</title>
+  <title>iOS APP添加桌面快捷方式 | 今是昨非的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="iOS技术分享">
-<meta property="og:type" content="website">
-<meta property="og:title" content="今是昨非的博客">
-<meta property="og:url" content="http://yoursite.com/page/3/index.html">
+  <meta name="description" content="iOS APP添加桌面快捷方式背景新接到一个需求，需要APP内的某些功能，能够把入口添加到桌面，点击桌面到入口可以直接跳转APP对应界面（类似于下面这张示例图），于是就做了一番调研。 其实很多APP目前都已经实现了类似的功能，比如支付宝、云闪付等等，其中的每一个独立功能都可以单独添加到桌面，所以网上有很多实现的方法，笔者做的是整理和试错。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS APP添加桌面快捷方式">
+<meta property="og:url" content="http://yoursite.com/2021/05/06/iOS%20%E6%B7%BB%E5%8A%A0%E6%A1%8C%E9%9D%A2%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F/index.html">
 <meta property="og:site_name" content="今是昨非的博客">
-<meta property="og:description" content="iOS技术分享">
+<meta property="og:description" content="iOS APP添加桌面快捷方式背景新接到一个需求，需要APP内的某些功能，能够把入口添加到桌面，点击桌面到入口可以直接跳转APP对应界面（类似于下面这张示例图），于是就做了一番调研。 其实很多APP目前都已经实现了类似的功能，比如支付宝、云闪付等等，其中的每一个独立功能都可以单独添加到桌面，所以网上有很多实现的方法，笔者做的是整理和试错。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/04/22/wn137cohlfDUpKN.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/22/H9hdM1rPgIvaEqc.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/23/Un47sFZaxi6GJC5.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/23/W4zIUYMdHluxS3A.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/23/PIuayL3t28WJVOi.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/23/A9QaIjZ8HN1xD7O.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/29/2hGU6u1YcgtkApz.jpg">
+<meta property="og:image" content="https://i.loli.net/2021/04/29/QRFYdJX9N2tSquj.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/23/ACd5wtVjEFXWpqD.png">
+<meta property="article:published_time" content="2021-05-06T05:29:00.000Z">
+<meta property="article:modified_time" content="2021-06-08T11:56:05.929Z">
 <meta property="article:author" content="今是昨非">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="iOS 14">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/04/22/wn137cohlfDUpKN.png">
   
     <link rel="alternative" href="/atom.xml" title="今是昨非的博客" type="application/atom+xml">
   
@@ -164,496 +178,169 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-Simple Swift dependency injection with functions" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-iOS 添加桌面快捷方式" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/06/Simple%20Swift%20dependency%20injection%20with%20functions/">简单的Swift函数的依赖注入</a>
+    <h1 class="article-title" itemprop="name">
+      iOS APP添加桌面快捷方式
     </h1>
   
 
         
-        <a href="/2018/12/06/Simple%20Swift%20dependency%20injection%20with%20functions/" class="archive-article-date">
-  	<time datetime="2018-12-06T08:48:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-06</time>
+        <a href="/2021/05/06/iOS%20%E6%B7%BB%E5%8A%A0%E6%A1%8C%E9%9D%A2%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F/" class="archive-article-date">
+  	<time datetime="2021-05-06T05:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-06</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="简单的Swift函数的依赖注入"><a href="#简单的Swift函数的依赖注入" class="headerlink" title="简单的Swift函数的依赖注入"></a>简单的Swift函数的依赖注入</h1><p>本文是翻译，原文链接：<a target="_blank" rel="noopener" href="https://www.swiftbysundell.com/posts/simple-swift-dependency-injection-with-functions">Simple Swift dependency injection with functions</a></p>
-<p>依赖注入是一种很好的解耦代码的手段，使代码变得易于测试。比起来对象自己创建自己的依赖，从外部注入，使得我们可以设置不同的场景————例如在生产中 vs 在测试中。</p>
-<p>在Swift中，大多数时候，我们用协议来实现依赖注入。例如，我们写一个简单的卡片游戏，用Randomizer(随机性发生器)画一个随机的卡片，如下所示：</p>
-        
-          <a class="article-more-a" href="/2018/12/06/Simple%20Swift%20dependency%20injection%20with%20functions/#more">more >></a>
-        
+        <h1 id="iOS-APP添加桌面快捷方式"><a href="#iOS-APP添加桌面快捷方式" class="headerlink" title="iOS APP添加桌面快捷方式"></a>iOS APP添加桌面快捷方式</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>新接到一个需求，需要APP内的某些功能，能够把入口添加到桌面，点击桌面到入口可以直接跳转APP对应界面（类似于下面这张示例图），于是就做了一番调研。</p>
+<p>其实很多APP目前都已经实现了类似的功能，比如支付宝、云闪付等等，其中的每一个独立功能都可以单独添加到桌面，所以网上有很多实现的方法，笔者做的是整理和试错。</p>
+<span id="more"></span>
+
+
+<img src="https://i.loli.net/2021/04/22/wn137cohlfDUpKN.png" width="50%" height="50%">
+
+
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>首先，添加到桌面功能的操作流程是：</p>
+<p>客户端打开APP -&gt; 进入到对应到APP功能模块 -&gt; 点击添加快捷方式到桌面按钮 -&gt; 跳转浏览器，并加载引导页面，点击分享，选择添加到主屏幕 -&gt; 从主屏幕点击刚刚添加到快捷功能，跳转到APP的对应界面。</p>
+<p><img src="https://i.loli.net/2021/04/22/H9hdM1rPgIvaEqc.png" alt="iOS开发内部功能生成桌面快捷方式.png"></p>
+<p>根据笔者了解到的信息，目前实现这种功能，大致可以分为两种实现方式：</p>
+<p>方法一：H5提供网页，每个不同的功能提供不同的网页，服务端返回这些网页的URL，客户端配置打开URL Scheme，然后使用Safari直接加载URL，加载的网页中根据进入方式的不同，自动重定向打开APP的URL Scheme。</p>
+<p>方法二：H5提供通用的网页，客户端替换通用网页中的内容，比如标题、图标等，并转为DataURI格式，服务端提供接口URL，客户端配置打开URL Scheme，使用Safari加载，接口返回强制重定向加载DataURI数据</p>
+<p>其中有作者分类了第三种方式，即客户端使用HttpServer，但笔者看来，无论是服务端返回URL还是客户端使用HttpServer，其实是服务端的不同实现方式，故而没有单独分类。</p>
+<h3 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h3><p><strong>第一步</strong> 客户端：iOS 打开已有Xcode项目，选中Target，添加URL Scheme，这个URL Scheme是自己定义的，在这个地方定义了xxx之后，可以通过在浏览器中输入xxx://来唤起APP，比如笔者定义了一个mkaddtohomescreen，然后在浏览器中输入mkaddtohomescreen://，就会弹出是否打开对应APP的提示</p>
+<img src="https://i.loli.net/2021/04/23/Un47sFZaxi6GJC5.png" width="80%" height="80%">
+
+
+
+<img src="https://i.loli.net/2021/04/23/W4zIUYMdHluxS3A.png" width="50%" height="50%">
+
+
+
+<p>定义好了Scheme之后，可以考虑Scheme添加参数的问题，通过在scheme后添加参数，在Appdelegate中applicaiton:open:options:方法拦截到，根据对应参数跳转不同界面</p>
+<blockquote>
+<p>比如Scheme为mkaddtohomescreen://page/view1，在applicaiton:open:options:中，url.absouluteString = mkaddtohomescreen://page/view1，url.host = page，url.path = /view1，所以可以根据path的不同跳转不同的界面。</p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">application</span>(<span class="keyword">_</span> <span class="params">app</span>: <span class="type">UIApplication</span>, <span class="params">open</span> <span class="params">url</span>: <span class="type">URL</span>, <span class="params">options</span>: [<span class="type">UIApplication</span>.<span class="params">OpenURLOptionsKey</span> : <span class="keyword">Any</span>] <span class="operator">=</span> [:])</span> -&gt; <span class="type">Bool</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">let</span> navController <span class="operator">=</span> window<span class="operator">?</span>.rootViewController <span class="keyword">as?</span> <span class="type">UINavigationController</span>,</span><br><span class="line">        <span class="keyword">let</span> topController <span class="operator">=</span> navController.topViewController &#123;</span><br><span class="line">        <span class="comment">// eg: mkaddtohomescreen://page/view1</span></span><br><span class="line">        <span class="comment">// url.host = page</span></span><br><span class="line">        <span class="comment">// url.path = /view1</span></span><br><span class="line">        <span class="keyword">if</span> url.absoluteString.hasPrefix(<span class="string">&quot;mkaddtohomescreen://&quot;</span>) &#123;</span><br><span class="line">            <span class="comment">// 说明是APP的URL Scheme，处理</span></span><br><span class="line">            </span><br><span class="line">            <span class="keyword">let</span> targetVC <span class="operator">=</span> targetViewController(from: url.path)</span><br><span class="line">            <span class="keyword">if</span> targetVC <span class="operator">!=</span> <span class="literal">nil</span> &#123;</span><br><span class="line">                <span class="comment">// 判断当前显示的界面是否是要跳转的界面</span></span><br><span class="line">                <span class="keyword">if</span> topController.classForCoder <span class="operator">==</span> targetVC<span class="operator">?</span>.classForCoder &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">                navController.pushViewController(targetVC<span class="operator">!</span>, animated: <span class="literal">true</span>)</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 根据URL path返回要跳转的界面</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">targetViewController</span>(<span class="params">from</span> <span class="params">path</span>: <span class="type">String</span>)</span> -&gt; <span class="type">UIViewController</span>? &#123;</span><br><span class="line">    <span class="keyword">var</span> targetVC: <span class="type">UIViewController</span>?</span><br><span class="line">    <span class="keyword">switch</span> path &#123;</span><br><span class="line">    <span class="comment">// 根据URL的path跳转不同路径</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;/view1&quot;</span>:</span><br><span class="line">        targetVC <span class="operator">=</span> <span class="type">Method1ViewController</span>()</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;/view2&quot;</span>:</span><br><span class="line">        targetVC <span class="operator">=</span> <span class="type">Method2ViewController</span>()</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;/view3&quot;</span>:</span><br><span class="line">        targetVC <span class="operator">=</span> <span class="type">Method3ViewController</span>()</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        targetVC <span class="operator">=</span> <span class="literal">nil</span></span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> targetVC</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p><strong>第二步</strong> H5参考<a target="_blank" rel="noopener" href="https://github.com/DarielChen/iOSTips/tree/master/Demo/47.%E7%BB%99App%E7%9A%84%E6%9F%90%E4%B8%AA%E5%8A%9F%E8%83%BD%E6%B7%BB%E5%8A%A0%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F">47.给App的某个功能添加快捷方式</a><br>中的shortcuts.html，其中共有三部分，大致为：</p>
+<ul>
+<li>header部分定义了网页的标题，以及显示到桌面快捷方式的图标和标题</li>
+<li>body部分则定义来这个网页的内容，其实是引导用户如何添加到桌面</li>
+<li>script部分则是做了一个判断，判断是桌面快捷方式进入的情况，自己调用redirect</li>
+</ul>
+<p>代码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;zh-CN&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;Content-Type&quot;</span> <span class="attr">content</span>=<span class="string">&quot;text/html; charset=UTF-8&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;apple-mobile-web-app-capable&quot;</span> <span class="attr">content</span>=<span class="string">&quot;yes&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;apple-mobile-web-app-status-bar-style&quot;</span> <span class="attr">content</span>=<span class="string">&quot;#ffffff&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;apple-mobile-web-app-title&quot;</span> <span class="attr">content</span>=<span class="string">&quot;\(title)&quot;</span>&gt;</span></span><br><span class="line">            </span><br><span class="line">        <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;apple-touch-icon-precomposed&quot;</span> <span class="attr">href</span>=<span class="string">&quot;data:image/jpeg;base64,\(feature_icon)&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>\(title)<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">        </span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"><span class="built_in">document</span>.documentElement.style.fontSize = <span class="number">100</span> * <span class="built_in">document</span>.documentElement.clientWidth / <span class="number">375</span> + <span class="string">&quot;px&quot;</span></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">        </span></span><br><span class="line"><span class="css">        * &#123; <span class="attribute">margin</span>: <span class="number">0</span>; <span class="attribute">padding</span>: <span class="number">0</span> &#125;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">body</span>, <span class="selector-tag">html</span> &#123; <span class="attribute">height</span>: <span class="number">100%</span>; <span class="attribute">width</span>: <span class="number">100%</span>; <span class="attribute">overflow</span>: hidden; <span class="attribute">background</span>: <span class="number">#f3f2f2</span>; <span class="attribute">text-align</span>: center &#125;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.main</span> &#123; <span class="attribute">color</span>: <span class="number">#333</span>; <span class="attribute">text-align</span>: center &#125;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.subject</span> &#123; <span class="attribute">margin-top</span>: <span class="number">1rem</span>; <span class="attribute">font-size</span>: .<span class="number">2rem</span> &#125;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.guide</span> &#123; <span class="attribute">width</span>: <span class="number">100%</span>; <span class="attribute">position</span>: absolute; <span class="attribute">left</span>: <span class="number">0</span>; <span class="attribute">bottom</span>: .<span class="number">3rem</span> &#125;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.guide</span> <span class="selector-class">.content</span> &#123; <span class="attribute">position</span>: relative; <span class="attribute">z-index</span>: <span class="number">20</span>; <span class="attribute">width</span>: <span class="number">3.5rem</span>; <span class="attribute">padding-top</span>: .<span class="number">16rem</span>; <span class="attribute">padding-bottom</span>: .<span class="number">06rem</span>; <span class="attribute">margin</span>: <span class="number">0</span> auto; <span class="attribute">border-radius</span>: .<span class="number">04rem</span>; <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">6px</span> <span class="number">15px</span> <span class="built_in">rgba</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, .<span class="number">13</span>); <span class="attribute">background</span>: <span class="number">#fff</span>; <span class="attribute">font-size</span>: .<span class="number">14rem</span> &#125;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.guide</span> <span class="selector-class">.tips</span> &#123; <span class="attribute">position</span>: relative; <span class="attribute">z-index</span>: <span class="number">20</span> &#125;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.guide</span> <span class="selector-class">.icon</span> &#123; <span class="attribute">width</span>: .<span class="number">2rem</span>; <span class="attribute">height</span>: .<span class="number">24rem</span>; <span class="attribute">margin</span>: <span class="number">0</span> .<span class="number">035rem</span> .<span class="number">02rem</span>; <span class="attribute">vertical-align</span>: bottom &#125;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.guide</span> <span class="selector-class">.toolbar</span> &#123; <span class="attribute">width</span>: <span class="number">100%</span>; <span class="attribute">height</span>: auto; <span class="attribute">margin-top</span>: -.<span class="number">12rem</span>; <span class="attribute">position</span>: relative; <span class="attribute">z-index</span>: <span class="number">10</span> &#125;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.guide</span> <span class="selector-class">.arrow</span> &#123; <span class="attribute">width</span>: .<span class="number">27rem</span>; <span class="attribute">height</span>: auto; <span class="attribute">position</span>: absolute; <span class="attribute">left</span>: <span class="number">50%</span>; <span class="attribute">bottom</span>: -.<span class="number">26rem</span>; <span class="attribute">margin-left</span>: -.<span class="number">135rem</span>; <span class="attribute">z-index</span>: <span class="number">10</span> &#125;</span></span><br><span class="line"><span class="css">    </span></span><br><span class="line"><span class="css">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">id</span>=<span class="string">&quot;redirect&quot;</span> <span class="attr">href</span>=<span class="string">&quot;\(urlToRedirect.absoluteString)&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;main&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;subject&quot;</span>&gt;</span>添加快捷功能到桌面<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;guide&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content&quot;</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;tips&quot;</span>&gt;</span></span><br><span class="line">                    点击下方工具栏上的<span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">&quot;icon&quot;</span> <span class="attr">src</span>=<span class="string">&quot;https://dariel-1256714552.cos.ap-shanghai.myqcloud.com/XEbFrgamEdvSxVFOBeuZ.png&quot;</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;tips&quot;</span>&gt;</span></span><br><span class="line">                        并选择<span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">&quot;icon&quot;</span> <span class="attr">src</span>=<span class="string">&quot;https://dariel-1256714552.cos.ap-shanghai.myqcloud.com/IkKEhyTLQpYtqXMZBYtQ.png&quot;</span>&gt;</span>“<span class="tag">&lt;<span class="name">strong</span>&gt;</span>添加到主屏幕<span class="tag">&lt;/<span class="name">strong</span>&gt;</span>”</span><br><span class="line">                    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">&quot;toolbar&quot;</span> <span class="attr">src</span>=<span class="string">&quot;https://dariel-1256714552.cos.ap-shanghai.myqcloud.com/oFNuXVhPJYvBDJPXJTmt.jpg&quot;</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">&quot;arrow&quot;</span> <span class="attr">src</span>=<span class="string">&quot;https://dariel-1256714552.cos.ap-shanghai.myqcloud.com/FlBEnTRnlhMyLyVhlfZT.png&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    </span></span><br><span class="line"><span class="javascript">    <span class="keyword">if</span> (<span class="built_in">window</span>.navigator.standalone) &#123;</span></span><br><span class="line"><span class="javascript">        </span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> element = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;container&#x27;</span>);</span></span><br><span class="line"><span class="javascript">        element.style.display = <span class="string">&quot;none&quot;</span>;</span></span><br><span class="line"><span class="javascript">        </span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> element = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;redirect&#x27;</span>);</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> event = <span class="built_in">document</span>.createEvent(<span class="string">&#x27;MouseEvents&#x27;</span>);</span></span><br><span class="line"><span class="javascript">        event.initEvent(<span class="string">&#x27;click&#x27;</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="built_in">document</span>.defaultView, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="number">0</span>, <span class="literal">null</span>);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">document</span>.body.style.backgroundColor = <span class="string">&#x27;#FFFFFF&#x27;</span>;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; element.dispatchEvent(event); &#125;, <span class="number">25</span>);</span></span><br><span class="line"><span class="javascript">        </span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="javascript">        </span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> element = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;container&#x27;</span>);</span></span><br><span class="line"><span class="javascript">        element.style.display = <span class="string">&quot;inline&quot;</span>;</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>其中有关于涉及到桌面快捷方式图标和标题设置的解释可参考苹果官方的<a target="_blank" rel="noopener" href="https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html">Configuring Web Applications</a>，如下</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- Specifying a Webpage Icon for Web Clip --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;apple-touch-icon&quot;</span> <span class="attr">href</span>=<span class="string">&quot;touch-icon-iphone.png&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- apple-touch-icon-precomposed与apple-touch-icon的区别为前者是原图，后者是会被苹果处理的图片，这两个的使用二选一即可</span></span><br><span class="line"><span class="comment">&lt;link rel=&quot;apple-touch-icon-precomposed&quot; href=&quot;xxx.png&quot;&gt; --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- Specifying a Launch Screen Image --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;apple-touch-startup-image&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/launch.png&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- Adding a Launch Icon Title --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;apple-mobile-web-app-title&quot;</span> <span class="attr">content</span>=<span class="string">&quot;AppTitle&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- Hiding Safari User Interface Components --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;apple-mobile-web-app-capable&quot;</span> <span class="attr">content</span>=<span class="string">&quot;yes&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- Changing the Status Bar Appearance&gt; --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;apple-mobile-web-app-status-bar-style&quot;</span> <span class="attr">content</span>=<span class="string">&quot;black&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- Linking to Other Native Apps --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;tel:1-408-555-5555&quot;</span>&gt;</span>Call me<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><p>H5提供网页，比如上面示例的代码，然后把其中header部分的内容设置为固定的</p>
+<ul>
+<li>“apple-mobile-web-app-title”是桌面快捷方式的标题</li>
+<li>“apple-touch-icon-precomposed”是桌面快捷方式的图片，其中的格式可以选择使用DataURI的这种样式，生成方法可以参考下面的</li>
+<li>“title”则是页面的标题</li>
+<li>\(urlToRedirect.absoluteString)是定义好的URL Scheme链接</li>
+</ul>
+<p>获取图片DataURI格式的数据Swift的代码如下</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 获取图片DataURI格式的数据</span></span><br><span class="line">  <span class="keyword">if</span> <span class="keyword">let</span> iconData <span class="operator">=</span> <span class="type">UIImage</span>(named: <span class="string">&quot;homeScreen&quot;</span>)<span class="operator">?</span>.jpegData(compressionQuality: <span class="number">0.5</span>) &#123;</span><br><span class="line">      <span class="keyword">let</span> iconDataURI <span class="operator">=</span> iconData.base64EncodedString()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>具体做法：</p>
+<ol>
+<li>配置好客户端的URLScheme</li>
+<li>H5提供编写好的网页，如果没有H5，可使用上面的shortcuts.html内容，把其中的待替换字段\(title)、\(feature_icon)、以及\(urlToRedirect.absoluteString)设置为自己APP的，其中的apple-touch-icon-precomposed需要放图标经过DataURI后的String</li>
+<li>需要服务端提供URL，返回这个网页，然后客户端打开这个URL。如果服务端也没有。。。那就跟我一样，使用模拟接口返回，打开<a target="_blank" rel="noopener" href="https://designer.mocky.io/design">mocky</a>，(可能需要注册)，Response Content Type 设置为text/html，HTTP Response Body 中放入下面的网页内容，然后点击底部的GENERATE MY HTTP RESPONSE，就会生成一个URL</li>
+</ol>
+<img src="https://i.loli.net/2021/04/23/PIuayL3t28WJVOi.png" width="80%" height="80%" />
+
+<ol start="4">
+<li>最后在点击添加快捷方式的地方，直接openURL即可</li>
+</ol>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">addMethod1</span>(<span class="keyword">_</span> <span class="params">sender</span>: <span class="keyword">Any</span>)</span> &#123;</span><br><span class="line">    <span class="comment">// 方法一，不需要本地放H5数据，只需要打开指定URL即可</span></span><br><span class="line">    <span class="comment">// 可使用mocky来提供模拟接口</span></span><br><span class="line">    <span class="keyword">let</span> urlStr <span class="operator">=</span> <span class="string">&quot;https://run.mocky.io/v3/98baaf4a-edec-4956-8506-7bbfca349d07&quot;</span></span><br><span class="line">    </span><br><span class="line">    <span class="type">UIApplication</span>.shared.open(<span class="type">URL</span>(string: urlStr)<span class="operator">!</span>, options: [:], completionHandler: <span class="literal">nil</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>可参考H5参考<a target="_blank" rel="noopener" href="https://github.com/DarielChen/iOSTips/tree/master/Demo/47.%E7%BB%99App%E7%9A%84%E6%9F%90%E4%B8%AA%E5%8A%9F%E8%83%BD%E6%B7%BB%E5%8A%A0%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F">47.给App的某个功能添加快捷方式</a>，使用的即是客户端自建服务器返回DataURI数据的方法，具体操作如下：</p>
+<ol>
+<li>配置好客户端的URL Schemes</li>
+<li>客户端使用Pod添加Swifter，用于自建服务器</li>
+<li>H5提供编写好的网页，使用上面的shortcuts.html内容，其中的待替换字段不要动</li>
+<li>在点击添加快捷方式时，客户端读取html的内容并替换里面指定字段，转为DataURI，启动本地服务器，并返回DataURI数据</li>
+</ol>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">addMethod2</span>(<span class="keyword">_</span> <span class="params">sender</span>: <span class="keyword">Any</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// 定义好的URL Scheme</span></span><br><span class="line">        <span class="keyword">let</span> schemeStr <span class="operator">=</span> <span class="string">&quot;mkaddtohomescreen://page/view2&quot;</span></span><br><span class="line">        <span class="comment">// 要替换的桌面快捷方式图标</span></span><br><span class="line">        <span class="keyword">let</span> shortcutImageData <span class="operator">=</span> <span class="type">UIImage</span>(named: <span class="string">&quot;homescreen&quot;</span>)<span class="operator">?</span>.jpegData(compressionQuality: <span class="number">0.5</span>)</span><br><span class="line">        <span class="comment">// 要替换的桌面快捷方式标题</span></span><br><span class="line">        <span class="keyword">let</span> shortcutTitle <span class="operator">=</span> <span class="string">&quot;添加到主屏幕2&quot;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">guard</span>  <span class="keyword">let</span> schemeURL <span class="operator">=</span> <span class="type">URL</span>(string: schemeStr),</span><br><span class="line">               <span class="keyword">let</span> shortcutImageStr <span class="operator">=</span> shortcutImageData<span class="operator">?</span>.base64EncodedString() <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 替换H5中的内容</span></span><br><span class="line">        <span class="keyword">let</span> htmlStr <span class="operator">=</span> htmlFor(title: shortcutTitle, urlToRedirect: schemeURL.absoluteString, icon: shortcutImageStr)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">guard</span> <span class="keyword">let</span> base64 <span class="operator">=</span> htmlStr.data(using: .utf8)<span class="operator">?</span>.base64EncodedString() <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 启动本地服务器，端口号是9081</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">let</span> shortcutUrl <span class="operator">=</span> <span class="type">URL</span>(string: <span class="string">&quot;http://localhost:9081/s&quot;</span>) &#123;</span><br><span class="line">            <span class="comment">// 转为dataURI格式</span></span><br><span class="line">            <span class="keyword">let</span> server <span class="operator">=</span> <span class="type">HttpServer</span>()</span><br><span class="line">            server[<span class="string">&quot;/s&quot;</span>] <span class="operator">=</span> &#123; request <span class="keyword">in</span></span><br><span class="line">                <span class="keyword">return</span> .movedPermanently(<span class="string">&quot;data:text/html;base64,<span class="subst">\(base64)</span>&quot;</span>)</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try?</span> server.start(<span class="number">9081</span>)</span><br><span class="line">            <span class="type">UIApplication</span>.shared.open(shortcutUrl, options: [:], completionHandler: <span class="literal">nil</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">htmlFor</span>(<span class="params">title</span>: <span class="type">String</span>, <span class="params">urlToRedirect</span>: <span class="type">String</span>, <span class="params">icon</span>: <span class="type">String</span>)</span> -&gt; <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> shortcutsPath <span class="operator">=</span> <span class="type">Bundle</span>.main.path(forResource: <span class="string">&quot;content2&quot;</span>, ofType: <span class="string">&quot;html&quot;</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">var</span> shortcutsContent <span class="operator">=</span> <span class="keyword">try!</span> <span class="type">String</span>(contentsOfFile: shortcutsPath<span class="operator">!</span>) <span class="keyword">as</span> <span class="type">String</span></span><br><span class="line">        shortcutsContent <span class="operator">=</span> shortcutsContent.replacingOccurrences(of: <span class="string">&quot;<span class="subst">\\</span>(title)&quot;</span>, with: title)</span><br><span class="line">        shortcutsContent <span class="operator">=</span> shortcutsContent.replacingOccurrences(of: <span class="string">&quot;<span class="subst">\\</span>(urlToRedirect.absoluteString)&quot;</span>, with: urlToRedirect)</span><br><span class="line">        shortcutsContent <span class="operator">=</span> shortcutsContent.replacingOccurrences(of: <span class="string">&quot;<span class="subst">\\</span>(feature_icon)&quot;</span>, with: icon)</span><br><span class="line"></span><br><span class="line">        <span class="built_in">print</span>(shortcutsContent)</span><br><span class="line">        <span class="keyword">return</span> shortcutsContent</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="还没完"><a href="#还没完" class="headerlink" title="还没完"></a>还没完</h3><p>代码笔者放到了<a target="_blank" rel="noopener" href="https://github.com/mokong/WKAddToHomeScreen">Github</a>，大家可以下载运行。然后会发现，还有一个问题，使用方法一的时候，添加快捷标签到桌面后，第一次点击打开了APP，然后这个快捷标签如果没有关闭，直接从桌面再次打开，发现时白屏，并没有再次触发加载，也就没有跳转APP。而使用了DataURI加载的方法二，则没有这个问题，每次点击图标均可以直接跳转。示例如下</p>
+<p>但是对比支付宝的添加到桌面发现支付宝的也是采用的方法一，第一次从桌面添加的快捷打开时自动跳转到支付宝，第二次点击桌面到快捷图标时，发现也是停留在一个页面，但是支付宝在这个页面上放了东西，可以称之为中间页。如下</p>
+<img src="https://i.loli.net/2021/04/23/A9QaIjZ8HN1xD7O.png" width="50%" height="50%">
+
+<p>要怎么实现中间页那种效果呢，目前笔者方法一的实现，点击时依赖的是服务端返回的H5网页内容，里面的Script会根据进入方式的不同，直接自跳转打开APP的URL Scheme；所以想要添加中间页，嗯，想法是：嵌套一层。即：</p>
+<ul>
+<li>服务端返回的H5网页内容，里面的Script不直接跳转打开APP的URL Scheme，而是跳转中间页的链接</li>
+<li>中间页的页面，同样的逻辑，再次跳转打开APP的URLScheme；同时中间页的页面添加按钮，点击也是跳转APP的URLScheme。<br>这样，第一次点击时，是桌面-中间页-APP的URL Scheme；第二次点击时，则是直接显示中间页，然后手动点击中间页上的立即进入，再次打开APP。</li>
+</ul>
+<p>下面来尝试一下：<br>首先编辑中间页面的H5，大致内容如下，仅供参考。。。。就是把之前H5页面的body部分简单修改一下，添加一个button，事件是点击打开Scheme，同时自动跳转Scheme的逻辑也还存在。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;zh-CN&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;Content-Type&quot;</span> <span class="attr">content</span>=<span class="string">&quot;text/html; charset=UTF-8&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;apple-mobile-web-app-capable&quot;</span> <span class="attr">content</span>=<span class="string">&quot;yes&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;apple-mobile-web-app-status-bar-style&quot;</span> <span class="attr">content</span>=<span class="string">&quot;#ffffff&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;apple-mobile-web-app-title&quot;</span> <span class="attr">content</span>=<span class="string">&quot;方法三中间页内容&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>&quot;方法三中间页标题&quot;<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">        </span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"><span class="built_in">document</span>.documentElement.style.fontSize = <span class="number">100</span> * <span class="built_in">document</span>.documentElement.clientWidth / <span class="number">375</span> + <span class="string">&quot;px&quot;</span></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">        </span></span><br><span class="line"><span class="css">        * &#123; <span class="attribute">margin</span>: <span class="number">0</span>; <span class="attribute">padding</span>: <span class="number">0</span> &#125;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.tips</span>&#123;<span class="attribute">color</span>:<span class="number">#999</span>; <span class="attribute">font-size</span>: <span class="number">30px</span>; <span class="attribute">margin-top</span>: <span class="number">100px</span>; <span class="attribute">text-align</span>: center&#125;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.appname</span>&#123;<span class="attribute">color</span>:blue; <span class="attribute">font-size</span>: <span class="number">30px</span>; <span class="attribute">margin-top</span>: <span class="number">30px</span>; <span class="attribute">text-align</span>: center&#125;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.enter</span>&#123;<span class="attribute">width</span>: <span class="number">100%</span>; <span class="attribute">height</span>: <span class="number">54px</span>; <span class="attribute">background-color</span>:cyan;&#125;</span></span><br><span class="line"><span class="css">    </span></span><br><span class="line"><span class="css">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">id</span>=<span class="string">&quot;redirect&quot;</span> <span class="attr">href</span>=<span class="string">&quot;mkaddtohomescreen://page/view3&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;B_container&quot;</span> <span class="attr">class</span>=<span class="string">&quot;backguide&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display: block; width=&#x27;100%&#x27;; background-color=#cyan&quot;</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;tips&quot;</span>&gt;</span>你即将进入<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">&quot;B_icon&quot;</span> <span class="attr">class</span>=<span class="string">&quot;icon&quot;</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">img</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;B_appname&quot;</span> <span class="attr">class</span>=<span class="string">&quot;appname&quot;</span>&gt;</span>MKAddToHomeScreen<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">&quot;enter&quot;</span> <span class="attr">onclick</span>=<span class="string">&quot;jumpSchema()&quot;</span> <span class="attr">style</span>=<span class="string">&quot;background-color: #red; widht=100%; height=64px&quot;</span>&gt;</span>立即进入<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    </span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">jumpSchema</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> element = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;redirect&#x27;</span>);</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> event = <span class="built_in">document</span>.createEvent(<span class="string">&#x27;MouseEvents&#x27;</span>);</span></span><br><span class="line"><span class="javascript">        event.initEvent(<span class="string">&#x27;click&#x27;</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="built_in">document</span>.defaultView, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="number">0</span>, <span class="literal">null</span>);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">document</span>.body.style.backgroundColor = <span class="string">&#x27;#FFFFFF&#x27;</span>;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; element.dispatchEvent(event); &#125;, <span class="number">25</span>);</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">    </span></span><br><span class="line"><span class="javascript">    <span class="keyword">if</span> (<span class="built_in">window</span>.navigator.standalone) &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> element = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;redirect&#x27;</span>);</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> event = <span class="built_in">document</span>.createEvent(<span class="string">&#x27;MouseEvents&#x27;</span>);</span></span><br><span class="line"><span class="javascript">        event.initEvent(<span class="string">&#x27;click&#x27;</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="built_in">document</span>.defaultView, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="number">0</span>, <span class="literal">null</span>);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">document</span>.body.style.backgroundColor = <span class="string">&#x27;#FFFFFF&#x27;</span>;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; element.dispatchEvent(event); &#125;, <span class="number">25</span>);</span></span><br><span class="line"><span class="javascript">        </span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="javascript">        </span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> element = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;container&#x27;</span>);</span></span><br><span class="line"><span class="javascript">        element.style.display = <span class="string">&quot;inline&quot;</span>;</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>把中间页的网页放到<a target="_blank" rel="noopener" href="https://designer.mocky.io/design">mocky</a>中按照同样的方式(Response Content Type 设置为text/html，HTTP Response Body 中放入网页内容)，生成一个URL，然后把这个URL放到之前网页要自跳转的href中，然后再把之前网页再用<a target="_blank" rel="noopener" href="https://designer.mocky.io/design">mocky</a>生成一个链接，在APP中使用openURL的方式打开最后生成的这个链接，运行，调试。</p>
+<p>发现结果是期望的，即第一次打开直接跳转，第二次打开显示中间页上面有点击跳转按钮；但是中间页的样式看起来确跟支付宝的不一样，这样生成的中间页因为经过了一次跳转，所以顶部和底部都显示了Safari二级页面的样式，嗯哼，这个不是笔者所希望的效果，而且体验支付宝的效果之后，发现支付宝的中间页是没有二级页面的那种头部和底部的，所以，那是怎么实现的呢？</p>
+<img src="https://i.loli.net/2021/04/29/2hGU6u1YcgtkApz.jpg" width="50%" height="50%">
+
+<p>如果不想要中间页显示为二级页面的形式，就不能采用上面那种经过一次跳转方法。只能采用单一页面的方法，在一个H5页面上想办法。所以现在想要的是，在同一个页面上，从APP跳转的时候显示“引导添加到桌面”的样式，从桌面打开时显示“中间页”的样式。</p>
+<p>按照这个逻辑来，用两个div，包括两段样式，根据进入方式的不同，设置两个div的显示隐藏是不是就可以了呢？说做就做，把上面第二个html中的内容和样式放到第一个html中，代码如下：middle_container是中间页的div，jump_container是引导页div，然后根据window.navigator.standalone判断显示哪一个div，middle_container中按钮点击是跳转打开APP，同时再把第一个html的跳转由跳转中间页改为打开APP</p>
+<p>Ps:</p>
+<blockquote>
+<p>要检测Web应用程序当前是否运行在全屏状态，只要检测window.navigator.standalone是否为true就可以了，如果这个属性为true则表示Web应用程序当前运行在全屏状态，否则运行在非全屏状态。可用于检测到Web应用程序运行在非全屏状态时提示用户把Web应用程序的图标添加到主屏幕。</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;zh-CN&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;Content-Type&quot;</span> <span class="attr">content</span>=<span class="string">&quot;text/html; charset=UTF-8&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;apple-mobile-web-app-capable&quot;</span> <span class="attr">content</span>=<span class="string">&quot;yes&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;apple-mobile-web-app-status-bar-style&quot;</span> <span class="attr">content</span>=<span class="string">&quot;#ffffff&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;apple-mobile-web-app-title&quot;</span> <span class="attr">content</span>=<span class="string">&quot;方法三标题&quot;</span>&gt;</span></span><br><span class="line">        </span><br><span class="line">        <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;apple-touch-icon-precomposed&quot;</span> <span class="attr">href</span>=<span class="string">&quot;data:image/jpeg;base64,imageData&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>方法三网页标题<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">        </span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"><span class="built_in">document</span>.documentElement.style.fontSize = <span class="number">100</span> * <span class="built_in">document</span>.documentElement.clientWidth / <span class="number">375</span> + <span class="string">&quot;px&quot;</span></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">        </span></span><br><span class="line"><span class="css">        * &#123; <span class="attribute">margin</span>: <span class="number">0</span>; <span class="attribute">padding</span>: <span class="number">0</span> &#125;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">body</span>, <span class="selector-tag">html</span> &#123; <span class="attribute">height</span>: <span class="number">100%</span>; <span class="attribute">width</span>: <span class="number">100%</span>; <span class="attribute">overflow</span>: hidden; <span class="attribute">background</span>: <span class="number">#f3f2f2</span>; <span class="attribute">text-align</span>: center &#125;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.main</span> &#123; <span class="attribute">color</span>: <span class="number">#333</span>; <span class="attribute">text-align</span>: center &#125;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.subject</span> &#123; <span class="attribute">margin-top</span>: <span class="number">1rem</span>; <span class="attribute">font-size</span>: .<span class="number">2rem</span> &#125;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.guide</span> &#123; <span class="attribute">width</span>: <span class="number">100%</span>; <span class="attribute">position</span>: absolute; <span class="attribute">left</span>: <span class="number">0</span>; <span class="attribute">bottom</span>: .<span class="number">3rem</span> &#125;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.guide</span> <span class="selector-class">.content</span> &#123; <span class="attribute">position</span>: relative; <span class="attribute">z-index</span>: <span class="number">20</span>; <span class="attribute">width</span>: <span class="number">3.5rem</span>; <span class="attribute">padding-top</span>: .<span class="number">16rem</span>; <span class="attribute">padding-bottom</span>: .<span class="number">06rem</span>; <span class="attribute">margin</span>: <span class="number">0</span> auto; <span class="attribute">border-radius</span>: .<span class="number">04rem</span>; <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">6px</span> <span class="number">15px</span> <span class="built_in">rgba</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, .<span class="number">13</span>); <span class="attribute">background</span>: <span class="number">#fff</span>; <span class="attribute">font-size</span>: .<span class="number">14rem</span> &#125;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.guide</span> <span class="selector-class">.tips</span> &#123; <span class="attribute">position</span>: relative; <span class="attribute">z-index</span>: <span class="number">20</span> &#125;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.guide</span> <span class="selector-class">.icon</span> &#123; <span class="attribute">width</span>: .<span class="number">2rem</span>; <span class="attribute">height</span>: .<span class="number">24rem</span>; <span class="attribute">margin</span>: <span class="number">0</span> .<span class="number">035rem</span> .<span class="number">02rem</span>; <span class="attribute">vertical-align</span>: bottom &#125;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.guide</span> <span class="selector-class">.toolbar</span> &#123; <span class="attribute">width</span>: <span class="number">100%</span>; <span class="attribute">height</span>: auto; <span class="attribute">margin-top</span>: -.<span class="number">12rem</span>; <span class="attribute">position</span>: relative; <span class="attribute">z-index</span>: <span class="number">10</span> &#125;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.guide</span> <span class="selector-class">.arrow</span> &#123; <span class="attribute">width</span>: .<span class="number">27rem</span>; <span class="attribute">height</span>: auto; <span class="attribute">position</span>: absolute; <span class="attribute">left</span>: <span class="number">50%</span>; <span class="attribute">bottom</span>: -.<span class="number">26rem</span>; <span class="attribute">margin-left</span>: -.<span class="number">135rem</span>; <span class="attribute">z-index</span>: <span class="number">10</span> &#125;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.middle_tips</span>&#123;<span class="attribute">color</span>:<span class="number">#999</span>; <span class="attribute">font-size</span>: <span class="number">30px</span>; <span class="attribute">margin-top</span>: <span class="number">100px</span>; <span class="attribute">text-align</span>: center&#125;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.middle_appname</span>&#123;<span class="attribute">color</span>:blue; <span class="attribute">font-size</span>: <span class="number">30px</span>; <span class="attribute">margin-top</span>: <span class="number">30px</span>; <span class="attribute">text-align</span>: center&#125;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.middle_enter</span>&#123;<span class="attribute">width</span>: <span class="number">100%</span>; <span class="attribute">height</span>: <span class="number">54px</span>; <span class="attribute">background-color</span>:cyan;&#125;</span></span><br><span class="line"><span class="css">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">id</span>=<span class="string">&quot;redirect&quot;</span> <span class="attr">href</span>=<span class="string">&quot;mkaddtohomescreen://page/view3&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;middle_container&quot;</span> <span class="attr">class</span>=<span class="string">&quot;backguide&quot;</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;middle_tips&quot;</span>&gt;</span>你即将进入<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">&quot;middle_icon&quot;</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">img</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;middle_appname&quot;</span>&gt;</span>MKAddToHomeScreen<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">&quot;middle_enter&quot;</span> <span class="attr">onclick</span>=<span class="string">&quot;jumpSchema()&quot;</span> <span class="attr">style</span>=<span class="string">&quot;background-color: #red; widht=100%; height=64px&quot;</span>&gt;</span>立即进入<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;jump_container&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;main&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;subject&quot;</span>&gt;</span>添加快捷功能到桌面<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;guide&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content&quot;</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;tips&quot;</span>&gt;</span></span><br><span class="line">                    点击下方工具栏上的<span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">&quot;icon&quot;</span> <span class="attr">src</span>=<span class="string">&quot;https://dariel-1256714552.cos.ap-shanghai.myqcloud.com/XEbFrgamEdvSxVFOBeuZ.png&quot;</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;tips&quot;</span>&gt;</span></span><br><span class="line">                        并选择<span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">&quot;icon&quot;</span> <span class="attr">src</span>=<span class="string">&quot;https://dariel-1256714552.cos.ap-shanghai.myqcloud.com/IkKEhyTLQpYtqXMZBYtQ.png&quot;</span>&gt;</span>“<span class="tag">&lt;<span class="name">strong</span>&gt;</span>添加到主屏幕<span class="tag">&lt;/<span class="name">strong</span>&gt;</span>”</span><br><span class="line">                    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">&quot;toolbar&quot;</span> <span class="attr">src</span>=<span class="string">&quot;https://dariel-1256714552.cos.ap-shanghai.myqcloud.com/oFNuXVhPJYvBDJPXJTmt.jpg&quot;</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">&quot;arrow&quot;</span> <span class="attr">src</span>=<span class="string">&quot;https://dariel-1256714552.cos.ap-shanghai.myqcloud.com/FlBEnTRnlhMyLyVhlfZT.png&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    </span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">jumpSchema</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> element = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;redirect&#x27;</span>);</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> event = <span class="built_in">document</span>.createEvent(<span class="string">&#x27;MouseEvents&#x27;</span>);</span></span><br><span class="line"><span class="javascript">        event.initEvent(<span class="string">&#x27;click&#x27;</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="built_in">document</span>.defaultView, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="number">0</span>, <span class="literal">null</span>);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">document</span>.body.style.backgroundColor = <span class="string">&#x27;#FFFFFF&#x27;</span>;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; element.dispatchEvent(event); &#125;, <span class="number">25</span>);</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript">    </span></span><br><span class="line"><span class="javascript">    <span class="keyword">if</span> (<span class="built_in">window</span>.navigator.standalone) &#123;</span></span><br><span class="line"><span class="javascript">        </span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> middle_element = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;middle_container&#x27;</span>);</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> jump_element = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;jump_container&#x27;</span>);</span></span><br><span class="line"><span class="javascript">        </span></span><br><span class="line"><span class="javascript">        middle_element.style.display = <span class="string">&quot;inline&quot;</span>;</span></span><br><span class="line"><span class="javascript">        jump_element.style.display = <span class="string">&quot;none&quot;</span></span></span><br><span class="line"><span class="javascript">        </span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> element = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;redirect&#x27;</span>);</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> event = <span class="built_in">document</span>.createEvent(<span class="string">&#x27;MouseEvents&#x27;</span>);</span></span><br><span class="line"><span class="javascript">        event.initEvent(<span class="string">&#x27;click&#x27;</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="built_in">document</span>.defaultView, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="number">0</span>, <span class="literal">null</span>);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">document</span>.body.style.backgroundColor = <span class="string">&#x27;#FFFFFF&#x27;</span>;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; element.dispatchEvent(event); &#125;, <span class="number">25</span>);</span></span><br><span class="line"><span class="javascript">        </span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="javascript">        </span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> middle_element = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;middle_container&#x27;</span>);</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> jump_element = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;jump_container&#x27;</span>);</span></span><br><span class="line"><span class="javascript">        </span></span><br><span class="line"><span class="javascript">        middle_element.style.display = <span class="string">&quot;none&quot;</span>;</span></span><br><span class="line"><span class="javascript">        jump_element.style.display = <span class="string">&quot;inline&quot;</span>;</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然后用当前内容放到<a target="_blank" rel="noopener" href="https://designer.mocky.io/design">mocky</a>生成一个链接，在程序中打开这个链接，体验，Binggo，完美。没有了二级界面的样式，而且再次打开，页面也不是空白，done。显示如下：</p>
+<img src="https://i.loli.net/2021/04/29/QRFYdJX9N2tSquj.png" width="50%" height="50%">
+
+
+
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>笔者感觉两种方式各有优缺点：方法一依赖于网络，因为需要服务端返回的网页内容，加载完成后才能进行下一步跳转。而方法二采用DataURI方式的，把数据已经转为string放在了本地，点击时直接加载，故而不依赖网络。但方法一实现简单，客户端、H5、和服务端配合虽然有些冗余，但工作量小，很容易实现。方法二的加载采用DataURI，查看调试数据不方便。根据笔者的观察，支付宝其实采用的是方法二，没网络的时候也可以加载打开主APP，且在方法二的基础上还加上了中间页。</p>
+<p>附图：</p>
+<img src="https://i.loli.net/2021/04/23/ACd5wtVjEFXWpqD.png" width="90%" height="90%">
+
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/9fb0824f95fe">iOS开发 将App内部功能块生成桌面快捷方式</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.cocoachina.com/articles/26570">给App的某个功能添加桌面快捷方式</a></li>
+<li><a target="_blank" rel="noopener" href="https://wayshon.com/2019/ios-app%E5%86%85%E9%A1%B5%E9%9D%A2%E6%B7%BB%E5%8A%A0%E5%88%B0%E6%A1%8C%E9%9D%A2.html">ios app内页面添加到桌面</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/2579ad49e11c">ios 关于支付宝添加桌面快捷方式的探究</a></li>
+<li><a target="_blank" rel="noopener" href="https://designer.mocky.io/design">模拟接口返回</a></li>
+</ul>
+
       
 
       
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/06/Simple%20Swift%20dependency%20injection%20with%20functions/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Namespacing Swift code with nested types" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/06/Namespacing%20Swift%20code%20with%20nested%20types/">Swift代码中的嵌套命名法</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/06/Namespacing%20Swift%20code%20with%20nested%20types/" class="archive-article-date">
-  	<time datetime="2018-12-06T08:48:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Swift代码中的嵌套命名法"><a href="#Swift代码中的嵌套命名法" class="headerlink" title="Swift代码中的嵌套命名法"></a>Swift代码中的嵌套命名法</h1><p>Swift支持与其他类型嵌套命名，尽管它还没有专用的命名关键词。下面我们来看看，如何使用类型嵌套来优化我们代码的结构。</p>
-<p>大多数Swift开发者习惯于用类型在结构上的实际名字累命名。例如：PostTextFormatterOption(一个Text Formatter类型的用于format Posts的Option)。这可能是因为我们在Objective-C &amp; C中，养成的别无选择的可怕命名习惯，被我们带到了Swift里。</p>
-<p>下面我们用上面提到的类型作为例子，来看下Post、PostTextFormatter以及PostTextFormatterOption的实现：</p>
-        
-          <a class="article-more-a" href="/2018/12/06/Namespacing%20Swift%20code%20with%20nested%20types/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/06/Namespacing%20Swift%20code%20with%20nested%20types/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Using @autoclosure when designing Swift APIs" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/06/Using%20@autoclosure%20when%20designing%20Swift%20APIs/">使用@autoclosure来设计Swift API</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/06/Using%20@autoclosure%20when%20designing%20Swift%20APIs/" class="archive-article-date">
-  	<time datetime="2018-12-06T08:48:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="使用-autoclosure来设计Swift-API"><a href="#使用-autoclosure来设计Swift-API" class="headerlink" title="使用@autoclosure来设计Swift API"></a>使用@autoclosure来设计Swift API</h1><h2 id="此文是翻译"><a href="#此文是翻译" class="headerlink" title="此文是翻译"></a><strong>此文是翻译</strong></h2><p>原文链接：<a target="_blank" rel="noopener" href="https://www.swiftbysundell.com/posts/using-autoclosure-when-designing-swift-apis">Using @autoclosure when designing Swift APIs</a></p>
-<p>Swift @autoclosure 属性用于在闭包中定义一个“被包裹”的参数。主要用于延迟执行一段（潜在的耗时、占资源大）代码到真正需要的时候，而不是在参数传递时就执行。</p>
-<p>在Swift标准库中就有一个例子，Assert函数的使用。由于asserts仅仅在debug模式下触发，所以没必要在release模式下执行代码。这时就用到了@autoclosure：</p>
-        
-          <a class="article-more-a" href="/2018/12/06/Using%20@autoclosure%20when%20designing%20Swift%20APIs/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/06/Using%20@autoclosure%20when%20designing%20Swift%20APIs/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Using the builder pattern in Swift" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/06/Using%20the%20builder%20pattern%20in%20Swift/">在Swift中使用构建者模式</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/06/Using%20the%20builder%20pattern%20in%20Swift/" class="archive-article-date">
-  	<time datetime="2018-12-06T08:48:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="在Swift中使用构建者模式"><a href="#在Swift中使用构建者模式" class="headerlink" title="在Swift中使用构建者模式"></a>在Swift中使用构建者模式</h1><p>和编程中其他的抽象和模式一样，构建者模式的目的是减少以保持可变状态——从而使对象更简单、且更容易预测。对象变得“少状态”，就会容易测试和调试——因为他们逻辑只存在单纯的输入输出。</p>
-<p>尽管构建者模式在java中十分常见，然而在苹果平台上却很少遇到（至少和构建对象不同）。这周，我们来看一下，构建者</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/06/Using%20the%20builder%20pattern%20in%20Swift/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-关于沟通" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/23/%E5%85%B3%E4%BA%8E%E6%B2%9F%E9%80%9A/">关于沟通</a>
-    </h1>
-  
-
-        
-        <a href="/2018/08/23/%E5%85%B3%E4%BA%8E%E6%B2%9F%E9%80%9A/" class="archive-article-date">
-  	<time datetime="2018-08-23T05:55:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="关于沟通的反思"><a href="#关于沟通的反思" class="headerlink" title="关于沟通的反思"></a>关于沟通的反思</h1><p>中午回去休息的时候，突然发现自己上午说话好难听。</p>
-<p>事情是，测试说我和安卓有个地方计算的不一样，然后要给我提Bug，然后我电脑当时正卡，本来就心情不太好，然后一听要给我提Bug，立马就炸了；</p>
-        
-          <a class="article-more-a" href="/2018/08/23/%E5%85%B3%E4%BA%8E%E6%B2%9F%E9%80%9A/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/23/%E5%85%B3%E4%BA%8E%E6%B2%9F%E9%80%9A/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-铃铛子简笔画训练营第二期+第一次作业" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/21/%E9%93%83%E9%93%9B%E5%AD%90%E7%AE%80%E7%AC%94%E7%94%BB%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%BA%8C%E6%9C%9F+%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%9C%E4%B8%9A/">铃铛子简笔画训练营</a>
-    </h1>
-  
-
-        
-        <a href="/2017/02/21/%E9%93%83%E9%93%9B%E5%AD%90%E7%AE%80%E7%AC%94%E7%94%BB%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%BA%8C%E6%9C%9F+%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%9C%E4%B8%9A/" class="archive-article-date">
-  	<time datetime="2017-02-21T15:16:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="绘画-2017-02-21"><a href="#绘画-2017-02-21" class="headerlink" title="绘画 2017.02.21"></a>绘画 2017.02.21</h1><p>上周脑袋一热，感觉自己平时没什么兴趣爱好，然后又看了一大段鸡汤文，然后一冲动，就报了简笔画训练营。。。。</p>
-        
-          <a class="article-more-a" href="/2017/02/21/%E9%93%83%E9%93%9B%E5%AD%90%E7%AE%80%E7%AC%94%E7%94%BB%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%BA%8C%E6%9C%9F+%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%9C%E4%B8%9A/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">生活</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/02/21/%E9%93%83%E9%93%9B%E5%AD%90%E7%AE%80%E7%AC%94%E7%94%BB%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%BA%8C%E6%9C%9F+%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%9C%E4%B8%9A/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-iOS-自动打包" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/20/iOS-%E8%87%AA%E5%8A%A8%E6%89%93%E5%8C%85/">iOS 自动打包</a>
-    </h1>
-  
-
-        
-        <a href="/2017/02/20/iOS-%E8%87%AA%E5%8A%A8%E6%89%93%E5%8C%85/" class="archive-article-date">
-  	<time datetime="2017-02-20T07:59:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="iOS-自动打包"><a href="#iOS-自动打包" class="headerlink" title="iOS 自动打包"></a>iOS 自动打包</h1><p>使用脚本实现自动打包，网上搜了好多，但是偶比较笨，一直发现不知道怎么使用，看了好久，<br>终于改了个可以使用的，但是最后发现不能用xcrun导出；宝宝心里苦，但宝宝不说😂；接着改，最后终于被我捣鼓成功了，分享给大家一下</p>
-        
-          <a class="article-more-a" href="/2017/02/20/iOS-%E8%87%AA%E5%8A%A8%E6%89%93%E5%8C%85/#more">more >></a>
-        
-      
-
       
     </div>
     <div class="article-info article-info-index">
@@ -668,7 +355,7 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">iOS自动打包</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">iOS 14</a>
         		</li>
       		
 		</ul>
@@ -677,16 +364,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/02/20/iOS-%E8%87%AA%E5%8A%A8%E6%89%93%E5%8C%85/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2021/05/06/iOS%20%E6%B7%BB%E5%8A%A0%E6%A1%8C%E9%9D%A2%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2021/04/21/iOS%20%E5%88%A0%E9%99%A4SceneDelegate%E5%92%8CStoryboard/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">iOS 删除新创建项目中的SceneDelegate</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -706,240 +452,14 @@
 
 
 
-
-  
-    <article id="post-坑" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/29/%E5%9D%91/">iOS开发之坑1</a>
-    </h1>
-  
-
-        
-        <a href="/2016/12/29/%E5%9D%91/" class="archive-article-date">
-  	<time datetime="2016-12-28T23:59:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="iOS开发之坑1"><a href="#iOS开发之坑1" class="headerlink" title="iOS开发之坑1"></a>iOS开发之坑1</h1><p>iOS 10 之后，switch的setOn方法调用之后，并没有按照文档上说的不发送action</p>
-        
-          <a class="article-more-a" href="/2016/12/29/%E5%9D%91/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/12/29/%E5%9D%91/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-我看过的美剧（一）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/11/%E6%88%91%E7%9C%8B%E8%BF%87%E7%9A%84%E7%BE%8E%E5%89%A7%EF%BC%88%E4%B8%80%EF%BC%89/">美剧推荐</a>
-    </h1>
-  
-
-        
-        <a href="/2016/07/11/%E6%88%91%E7%9C%8B%E8%BF%87%E7%9A%84%E7%BE%8E%E5%89%A7%EF%BC%88%E4%B8%80%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2016-07-11T14:06:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-07-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="美剧"><a href="#美剧" class="headerlink" title="美剧"></a>美剧</h1><p>最近剧荒了，所以想让大家分享一点好看的美剧，我先来说一下自己喜欢的：</p>
-        
-          <a class="article-more-a" href="/2016/07/11/%E6%88%91%E7%9C%8B%E8%BF%87%E7%9A%84%E7%BE%8E%E5%89%A7%EF%BC%88%E4%B8%80%EF%BC%89/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">生活</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/07/11/%E6%88%91%E7%9C%8B%E8%BF%87%E7%9A%84%E7%BE%8E%E5%89%A7%EF%BC%88%E4%B8%80%EF%BC%89/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-半透明黑色背景的实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/01/%E5%8D%8A%E9%80%8F%E6%98%8E%E9%BB%91%E8%89%B2%E8%83%8C%E6%99%AF%E7%9A%84%E5%AE%9E%E7%8E%B0/">半透明效果的实现</a>
-    </h1>
-  
-
-        
-        <a href="/2016/06/01/%E5%8D%8A%E9%80%8F%E6%98%8E%E9%BB%91%E8%89%B2%E8%83%8C%E6%99%AF%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
-  	<time datetime="2016-06-01T15:51:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-06-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="类似下图这样一个半透明效果的实现："><a href="#类似下图这样一个半透明效果的实现：" class="headerlink" title="类似下图这样一个半透明效果的实现："></a>类似下图这样一个半透明效果的实现：</h1><p><img src="http://upload-images.jianshu.io/upload_images/1208479-15f3607b1fbd1617.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image1.png"></p>
-        
-          <a class="article-more-a" href="/2016/06/01/%E5%8D%8A%E9%80%8F%E6%98%8E%E9%BB%91%E8%89%B2%E8%83%8C%E6%99%AF%E7%9A%84%E5%AE%9E%E7%8E%B0/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/06/01/%E5%8D%8A%E9%80%8F%E6%98%8E%E9%BB%91%E8%89%B2%E8%83%8C%E6%99%AF%E7%9A%84%E5%AE%9E%E7%8E%B0/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&lt;&lt; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">Next &gt;&gt;</a>
-    </nav>
+  
+
+  
+
+  
+
   
 
 
@@ -962,8 +482,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

@@ -6,17 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>今是昨非的博客</title>
+  <title>iOS 删除新创建项目中的SceneDelegate | 今是昨非的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="iOS技术分享">
-<meta property="og:type" content="website">
-<meta property="og:title" content="今是昨非的博客">
-<meta property="og:url" content="http://yoursite.com/page/3/index.html">
+  <meta name="description" content="iOS 删除新创建项目中的SceneDelegate背景Xcode 11之后新建工程，默认为有SceneDelegate，但是SceneDelegate是从iOS 13之后才有的，如果最低兼容版本到iOS 13以下，需要怎么做呢？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 删除新创建项目中的SceneDelegate">
+<meta property="og:url" content="http://yoursite.com/2021/04/21/iOS%20%E5%88%A0%E9%99%A4SceneDelegate%E5%92%8CStoryboard/index.html">
 <meta property="og:site_name" content="今是昨非的博客">
-<meta property="og:description" content="iOS技术分享">
+<meta property="og:description" content="iOS 删除新创建项目中的SceneDelegate背景Xcode 11之后新建工程，默认为有SceneDelegate，但是SceneDelegate是从iOS 13之后才有的，如果最低兼容版本到iOS 13以下，需要怎么做呢？">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/04/21/AYslwW2Kb9Zeitn.png">
+<meta property="article:published_time" content="2021-04-21T05:23:00.000Z">
+<meta property="article:modified_time" content="2021-06-08T11:56:24.488Z">
 <meta property="article:author" content="今是昨非">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="iOS 14">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/04/21/AYslwW2Kb9Zeitn.png">
   
     <link rel="alternative" href="/atom.xml" title="今是昨非的博客" type="application/atom+xml">
   
@@ -164,496 +170,90 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-Simple Swift dependency injection with functions" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-iOS 删除SceneDelegate和Storyboard" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/06/Simple%20Swift%20dependency%20injection%20with%20functions/">简单的Swift函数的依赖注入</a>
+    <h1 class="article-title" itemprop="name">
+      iOS 删除新创建项目中的SceneDelegate
     </h1>
   
 
         
-        <a href="/2018/12/06/Simple%20Swift%20dependency%20injection%20with%20functions/" class="archive-article-date">
-  	<time datetime="2018-12-06T08:48:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-06</time>
+        <a href="/2021/04/21/iOS%20%E5%88%A0%E9%99%A4SceneDelegate%E5%92%8CStoryboard/" class="archive-article-date">
+  	<time datetime="2021-04-21T05:23:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-21</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="简单的Swift函数的依赖注入"><a href="#简单的Swift函数的依赖注入" class="headerlink" title="简单的Swift函数的依赖注入"></a>简单的Swift函数的依赖注入</h1><p>本文是翻译，原文链接：<a target="_blank" rel="noopener" href="https://www.swiftbysundell.com/posts/simple-swift-dependency-injection-with-functions">Simple Swift dependency injection with functions</a></p>
-<p>依赖注入是一种很好的解耦代码的手段，使代码变得易于测试。比起来对象自己创建自己的依赖，从外部注入，使得我们可以设置不同的场景————例如在生产中 vs 在测试中。</p>
-<p>在Swift中，大多数时候，我们用协议来实现依赖注入。例如，我们写一个简单的卡片游戏，用Randomizer(随机性发生器)画一个随机的卡片，如下所示：</p>
-        
-          <a class="article-more-a" href="/2018/12/06/Simple%20Swift%20dependency%20injection%20with%20functions/#more">more >></a>
-        
+        <h1 id="iOS-删除新创建项目中的SceneDelegate"><a href="#iOS-删除新创建项目中的SceneDelegate" class="headerlink" title="iOS 删除新创建项目中的SceneDelegate"></a>iOS 删除新创建项目中的SceneDelegate</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>Xcode 11之后新建工程，默认为有SceneDelegate，但是SceneDelegate是从iOS 13之后才有的，如果最低兼容版本到iOS 13以下，需要怎么做呢？</p>
+<span id="more"></span>
+
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>首先来看一下，SceneDelegate是什么，为什么会有SceneDelegate</p>
+<p>官方说明：</p>
+<blockquote>
+<p>A UISceneSession object manages a unique runtime instance of your scene. When the user adds a new scene to your app, or when you request one programmatically, the system creates a session object to track that scene. The session contains a unique identifier and the configuration details of the scene. UIKit maintains the session information for the lifetime of the scene itself, destroying the session in response to the user closing the scene in the app switcher.<br>You do not create session objects directly. UIKit creates sessions in response to user interactions with your app. You can also ask UIKit to create a new scene and session programmatically by calling the requestSceneSessionActivation(_:userActivity:options:errorHandler:) method of UIApplication. UIKit initializes the session with default configuration data based on the contents of your app’s Info.plist file.</p>
+</blockquote>
+<p>翻译解释：</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/53e3252dc07e">在iOS 13（及以后版本）上，SceneDelegate将负责AppDelegate的某些功能。 最重要的是，window（窗口）的概念已被scene（场景）的概念所代替。 一个应用程序可以具有不止一个场景，而一个场景现在可以作为您应用程序的用户界面和内容的载体（背景）。</a></p>
+</blockquote>
+<p>Xcode 11新创建的项目涉及到SceneDelegate的地方如下：</p>
+<ol>
+<li>AppDelegate类中两个“scene sessions”方法：application(<em>:configurationForConnecting:options:) 和 application(</em>:didDiscardSceneSessions:)</li>
+<li>一个SceneDelegate类，其中包括生命周期事件，例如active，resign和disconnect。</li>
+<li>Info.plist文件中提供了”Application Scene Manifest“配置项，用于配置App的场景，包括它们的场景配置名，delegate类名和storyboard入口</li>
+</ol>
+<p>那不需要SceneDelegate，要怎么处理？<br>两种方法，<br>a. 一种是直接把SceneDelegate相关的删除<br>b. 另外一种则是根据系统版本判断兼容</p>
+<p>方法一：删除SceneDelegate</p>
+<ol>
+<li>把AppDelegate中UISceneSession Lifecycle的两个代理方法删除，添加window属性，在application:didFinishLaunchingWithOptions:方法中初始化window，设置根视图</li>
+<li>删除SceneDelegate文件</li>
+<li>选中target，切换到info，删除Application Scene Manifest这行</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/// AppDelegate.Swift</span><br><span class="line"></span><br><span class="line">import UIKit</span><br><span class="line"></span><br><span class="line">@main</span><br><span class="line">class AppDelegate: UIResponder, UIApplicationDelegate &#123;</span><br><span class="line"></span><br><span class="line">    var window: UIWindow?</span><br><span class="line"></span><br><span class="line">    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -&gt; Bool &#123;</span><br><span class="line">        // Override point for customization after application launch.</span><br><span class="line">        </span><br><span class="line">        self.window = UIWindow(frame: UIScreen.main.bounds)</span><br><span class="line">        self.window?.backgroundColor = UIColor.white</span><br><span class="line">        </span><br><span class="line">        self.window?.rootViewController = HXBaseViewController()</span><br><span class="line">        self.window?.makeKeyAndVisible()</span><br><span class="line">        </span><br><span class="line">        return true</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2021/04/21/AYslwW2Kb9Zeitn.png" alt="WeCom20210421-115403@2x.png"></p>
+<p>方法二：根据系统版本判断兼容，但是这种方法要注意，iOS 13之后有些程序状态的处理要在SeceneDelegate中</p>
+<ol>
+<li>首先在SceneDelegate中加入@available(iOS 13, *)的声明，</li>
+<li>然后把AppDelgate中UISceneSession Lifecycle的两个代理方法写到单独的Extension中，然后声明@avaiable(iOS 13, *)，</li>
+<li>AppDelegate的启动方法中也需要修改，编译即可</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// SceneDelegate.swift</span><br><span class="line">import UIKit</span><br><span class="line"></span><br><span class="line">@available(iOS 13, *)</span><br><span class="line">class SceneDelegate: UIResponder, UIWindowSceneDelegate &#123;</span><br><span class="line">    xxx</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class AppDelegate: UIResponder, UIApplicationDelegate &#123;</span><br><span class="line"></span><br><span class="line">    var window: UIWindow?</span><br><span class="line"></span><br><span class="line">    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -&gt; Bool &#123;</span><br><span class="line">        // Override point for customization after application launch.</span><br><span class="line">        </span><br><span class="line">        if #available(iOS 13.0, *) &#123;</span><br><span class="line">            // 不需要处理，走SceneDelegate</span><br><span class="line">        &#125;</span><br><span class="line">        else &#123;</span><br><span class="line">            // 初始化UIWindow</span><br><span class="line">            window = UIWindow.init()</span><br><span class="line">            window?.frame = UIScreen.main.bounds</span><br><span class="line">            window?.makeKeyAndVisible()</span><br><span class="line">            window?.rootViewController = UIStoryboard.init(name: &quot;Main&quot;, bundle: nil).instantiateInitialViewController()</span><br><span class="line">        &#125;</span><br><span class="line">        return true</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@available(iOS 13, *)</span><br><span class="line">extension AppDelegate &#123;</span><br><span class="line">    // MARK: UISceneSession Lifecycle</span><br><span class="line"></span><br><span class="line">    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -&gt; UISceneConfiguration &#123;</span><br><span class="line">        // Called when a new scene session is being created.</span><br><span class="line">        // Use this method to select a configuration to create the new scene with.</span><br><span class="line">        return UISceneConfiguration(name: &quot;Default Configuration&quot;, sessionRole: connectingSceneSession.role)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set&lt;UISceneSession&gt;) &#123;</span><br><span class="line">        // Called when the user discards a scene session.</span><br><span class="line">        // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.</span><br><span class="line">        // Use this method to release any resources that were specific to the discarded scenes, as they will not return.</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/53e3252dc07e">iOS13 Scene Delegate详解</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_38735568/article/details/101266408?utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-1.control&dist_request_id=&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-1.control">iOS 13 SceneDelegate适配</a></p>
+
       
 
       
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/06/Simple%20Swift%20dependency%20injection%20with%20functions/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Namespacing Swift code with nested types" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/06/Namespacing%20Swift%20code%20with%20nested%20types/">Swift代码中的嵌套命名法</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/06/Namespacing%20Swift%20code%20with%20nested%20types/" class="archive-article-date">
-  	<time datetime="2018-12-06T08:48:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Swift代码中的嵌套命名法"><a href="#Swift代码中的嵌套命名法" class="headerlink" title="Swift代码中的嵌套命名法"></a>Swift代码中的嵌套命名法</h1><p>Swift支持与其他类型嵌套命名，尽管它还没有专用的命名关键词。下面我们来看看，如何使用类型嵌套来优化我们代码的结构。</p>
-<p>大多数Swift开发者习惯于用类型在结构上的实际名字累命名。例如：PostTextFormatterOption(一个Text Formatter类型的用于format Posts的Option)。这可能是因为我们在Objective-C &amp; C中，养成的别无选择的可怕命名习惯，被我们带到了Swift里。</p>
-<p>下面我们用上面提到的类型作为例子，来看下Post、PostTextFormatter以及PostTextFormatterOption的实现：</p>
-        
-          <a class="article-more-a" href="/2018/12/06/Namespacing%20Swift%20code%20with%20nested%20types/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/06/Namespacing%20Swift%20code%20with%20nested%20types/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Using @autoclosure when designing Swift APIs" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/06/Using%20@autoclosure%20when%20designing%20Swift%20APIs/">使用@autoclosure来设计Swift API</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/06/Using%20@autoclosure%20when%20designing%20Swift%20APIs/" class="archive-article-date">
-  	<time datetime="2018-12-06T08:48:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="使用-autoclosure来设计Swift-API"><a href="#使用-autoclosure来设计Swift-API" class="headerlink" title="使用@autoclosure来设计Swift API"></a>使用@autoclosure来设计Swift API</h1><h2 id="此文是翻译"><a href="#此文是翻译" class="headerlink" title="此文是翻译"></a><strong>此文是翻译</strong></h2><p>原文链接：<a target="_blank" rel="noopener" href="https://www.swiftbysundell.com/posts/using-autoclosure-when-designing-swift-apis">Using @autoclosure when designing Swift APIs</a></p>
-<p>Swift @autoclosure 属性用于在闭包中定义一个“被包裹”的参数。主要用于延迟执行一段（潜在的耗时、占资源大）代码到真正需要的时候，而不是在参数传递时就执行。</p>
-<p>在Swift标准库中就有一个例子，Assert函数的使用。由于asserts仅仅在debug模式下触发，所以没必要在release模式下执行代码。这时就用到了@autoclosure：</p>
-        
-          <a class="article-more-a" href="/2018/12/06/Using%20@autoclosure%20when%20designing%20Swift%20APIs/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/06/Using%20@autoclosure%20when%20designing%20Swift%20APIs/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Using the builder pattern in Swift" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/06/Using%20the%20builder%20pattern%20in%20Swift/">在Swift中使用构建者模式</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/06/Using%20the%20builder%20pattern%20in%20Swift/" class="archive-article-date">
-  	<time datetime="2018-12-06T08:48:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="在Swift中使用构建者模式"><a href="#在Swift中使用构建者模式" class="headerlink" title="在Swift中使用构建者模式"></a>在Swift中使用构建者模式</h1><p>和编程中其他的抽象和模式一样，构建者模式的目的是减少以保持可变状态——从而使对象更简单、且更容易预测。对象变得“少状态”，就会容易测试和调试——因为他们逻辑只存在单纯的输入输出。</p>
-<p>尽管构建者模式在java中十分常见，然而在苹果平台上却很少遇到（至少和构建对象不同）。这周，我们来看一下，构建者</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/06/Using%20the%20builder%20pattern%20in%20Swift/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-关于沟通" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/23/%E5%85%B3%E4%BA%8E%E6%B2%9F%E9%80%9A/">关于沟通</a>
-    </h1>
-  
-
-        
-        <a href="/2018/08/23/%E5%85%B3%E4%BA%8E%E6%B2%9F%E9%80%9A/" class="archive-article-date">
-  	<time datetime="2018-08-23T05:55:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="关于沟通的反思"><a href="#关于沟通的反思" class="headerlink" title="关于沟通的反思"></a>关于沟通的反思</h1><p>中午回去休息的时候，突然发现自己上午说话好难听。</p>
-<p>事情是，测试说我和安卓有个地方计算的不一样，然后要给我提Bug，然后我电脑当时正卡，本来就心情不太好，然后一听要给我提Bug，立马就炸了；</p>
-        
-          <a class="article-more-a" href="/2018/08/23/%E5%85%B3%E4%BA%8E%E6%B2%9F%E9%80%9A/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/23/%E5%85%B3%E4%BA%8E%E6%B2%9F%E9%80%9A/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-铃铛子简笔画训练营第二期+第一次作业" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/21/%E9%93%83%E9%93%9B%E5%AD%90%E7%AE%80%E7%AC%94%E7%94%BB%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%BA%8C%E6%9C%9F+%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%9C%E4%B8%9A/">铃铛子简笔画训练营</a>
-    </h1>
-  
-
-        
-        <a href="/2017/02/21/%E9%93%83%E9%93%9B%E5%AD%90%E7%AE%80%E7%AC%94%E7%94%BB%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%BA%8C%E6%9C%9F+%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%9C%E4%B8%9A/" class="archive-article-date">
-  	<time datetime="2017-02-21T15:16:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="绘画-2017-02-21"><a href="#绘画-2017-02-21" class="headerlink" title="绘画 2017.02.21"></a>绘画 2017.02.21</h1><p>上周脑袋一热，感觉自己平时没什么兴趣爱好，然后又看了一大段鸡汤文，然后一冲动，就报了简笔画训练营。。。。</p>
-        
-          <a class="article-more-a" href="/2017/02/21/%E9%93%83%E9%93%9B%E5%AD%90%E7%AE%80%E7%AC%94%E7%94%BB%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%BA%8C%E6%9C%9F+%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%9C%E4%B8%9A/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">生活</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/02/21/%E9%93%83%E9%93%9B%E5%AD%90%E7%AE%80%E7%AC%94%E7%94%BB%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%BA%8C%E6%9C%9F+%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%9C%E4%B8%9A/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-iOS-自动打包" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/20/iOS-%E8%87%AA%E5%8A%A8%E6%89%93%E5%8C%85/">iOS 自动打包</a>
-    </h1>
-  
-
-        
-        <a href="/2017/02/20/iOS-%E8%87%AA%E5%8A%A8%E6%89%93%E5%8C%85/" class="archive-article-date">
-  	<time datetime="2017-02-20T07:59:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="iOS-自动打包"><a href="#iOS-自动打包" class="headerlink" title="iOS 自动打包"></a>iOS 自动打包</h1><p>使用脚本实现自动打包，网上搜了好多，但是偶比较笨，一直发现不知道怎么使用，看了好久，<br>终于改了个可以使用的，但是最后发现不能用xcrun导出；宝宝心里苦，但宝宝不说😂；接着改，最后终于被我捣鼓成功了，分享给大家一下</p>
-        
-          <a class="article-more-a" href="/2017/02/20/iOS-%E8%87%AA%E5%8A%A8%E6%89%93%E5%8C%85/#more">more >></a>
-        
-      
-
       
     </div>
     <div class="article-info article-info-index">
@@ -668,7 +268,7 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">iOS自动打包</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">iOS 14</a>
         		</li>
       		
 		</ul>
@@ -677,16 +277,84 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/02/20/iOS-%E8%87%AA%E5%8A%A8%E6%89%93%E5%8C%85/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2021/04/21/iOS%20%E5%88%A0%E9%99%A4SceneDelegate%E5%92%8CStoryboard/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2021/05/06/iOS%20%E6%B7%BB%E5%8A%A0%E6%A1%8C%E9%9D%A2%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          iOS APP添加桌面快捷方式
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/04/19/iOS%20fastlane%E6%89%93%E5%8C%85/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">iOS 自动打包</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -706,240 +374,14 @@
 
 
 
-
-  
-    <article id="post-坑" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/29/%E5%9D%91/">iOS开发之坑1</a>
-    </h1>
-  
-
-        
-        <a href="/2016/12/29/%E5%9D%91/" class="archive-article-date">
-  	<time datetime="2016-12-28T23:59:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="iOS开发之坑1"><a href="#iOS开发之坑1" class="headerlink" title="iOS开发之坑1"></a>iOS开发之坑1</h1><p>iOS 10 之后，switch的setOn方法调用之后，并没有按照文档上说的不发送action</p>
-        
-          <a class="article-more-a" href="/2016/12/29/%E5%9D%91/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/12/29/%E5%9D%91/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-我看过的美剧（一）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/11/%E6%88%91%E7%9C%8B%E8%BF%87%E7%9A%84%E7%BE%8E%E5%89%A7%EF%BC%88%E4%B8%80%EF%BC%89/">美剧推荐</a>
-    </h1>
-  
-
-        
-        <a href="/2016/07/11/%E6%88%91%E7%9C%8B%E8%BF%87%E7%9A%84%E7%BE%8E%E5%89%A7%EF%BC%88%E4%B8%80%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2016-07-11T14:06:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-07-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="美剧"><a href="#美剧" class="headerlink" title="美剧"></a>美剧</h1><p>最近剧荒了，所以想让大家分享一点好看的美剧，我先来说一下自己喜欢的：</p>
-        
-          <a class="article-more-a" href="/2016/07/11/%E6%88%91%E7%9C%8B%E8%BF%87%E7%9A%84%E7%BE%8E%E5%89%A7%EF%BC%88%E4%B8%80%EF%BC%89/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">生活</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/07/11/%E6%88%91%E7%9C%8B%E8%BF%87%E7%9A%84%E7%BE%8E%E5%89%A7%EF%BC%88%E4%B8%80%EF%BC%89/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-半透明黑色背景的实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/01/%E5%8D%8A%E9%80%8F%E6%98%8E%E9%BB%91%E8%89%B2%E8%83%8C%E6%99%AF%E7%9A%84%E5%AE%9E%E7%8E%B0/">半透明效果的实现</a>
-    </h1>
-  
-
-        
-        <a href="/2016/06/01/%E5%8D%8A%E9%80%8F%E6%98%8E%E9%BB%91%E8%89%B2%E8%83%8C%E6%99%AF%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
-  	<time datetime="2016-06-01T15:51:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-06-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="类似下图这样一个半透明效果的实现："><a href="#类似下图这样一个半透明效果的实现：" class="headerlink" title="类似下图这样一个半透明效果的实现："></a>类似下图这样一个半透明效果的实现：</h1><p><img src="http://upload-images.jianshu.io/upload_images/1208479-15f3607b1fbd1617.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image1.png"></p>
-        
-          <a class="article-more-a" href="/2016/06/01/%E5%8D%8A%E9%80%8F%E6%98%8E%E9%BB%91%E8%89%B2%E8%83%8C%E6%99%AF%E7%9A%84%E5%AE%9E%E7%8E%B0/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/06/01/%E5%8D%8A%E9%80%8F%E6%98%8E%E9%BB%91%E8%89%B2%E8%83%8C%E6%99%AF%E7%9A%84%E5%AE%9E%E7%8E%B0/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&lt;&lt; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">Next &gt;&gt;</a>
-    </nav>
+  
+
+  
+
+  
+
   
 
 
@@ -962,8 +404,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
