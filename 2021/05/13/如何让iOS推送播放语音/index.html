@@ -6,17 +6,34 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: iOS 14 | 今是昨非的博客</title>
+  <title>如何让iOS推送播放语音 | 今是昨非的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="iOS技术分享">
-<meta property="og:type" content="website">
-<meta property="og:title" content="今是昨非的博客">
-<meta property="og:url" content="http://yoursite.com/tags/iOS-14/index.html">
+  <meta name="description" content="本文发表在《搜狐技术产品》公众号如何让iOS推送播放语音 iOS 推送播放语音一：背景iOS 推送播放语音的需求调研，即收到推送后，播放推送的文案，文案的内容不固定。类似于支付宝和微信的收款到账语音。  只有iOS10以上才支持app被唤醒后在后台&#x2F;锁屏状态下播放音频。所以iOS10以下的设备，在收到VoIP Push后只能在local push上设定一段固定铃声，这也是为什么iOS10以下只有“">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何让iOS推送播放语音">
+<meta property="og:url" content="http://yoursite.com/2021/05/13/%E5%A6%82%E4%BD%95%E8%AE%A9iOS%E6%8E%A8%E9%80%81%E6%92%AD%E6%94%BE%E8%AF%AD%E9%9F%B3/index.html">
 <meta property="og:site_name" content="今是昨非的博客">
-<meta property="og:description" content="iOS技术分享">
+<meta property="og:description" content="本文发表在《搜狐技术产品》公众号如何让iOS推送播放语音 iOS 推送播放语音一：背景iOS 推送播放语音的需求调研，即收到推送后，播放推送的文案，文案的内容不固定。类似于支付宝和微信的收款到账语音。  只有iOS10以上才支持app被唤醒后在后台&#x2F;锁屏状态下播放音频。所以iOS10以下的设备，在收到VoIP Push后只能在local push上设定一段固定铃声，这也是为什么iOS10以下只有“">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/04/13/bzY94gBMKiscE5f.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/13/7zvpnGPTMR84gyh.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/13/oFAuwUXz8G3EL6f.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/13/nukm31MIZspAKTh.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/13/pWnS2qk9KOXoNR6.jpg">
+<meta property="og:image" content="https://i.loli.net/2021/04/13/voO3fn1QsbMPIxh.jpg">
+<meta property="og:image" content="https://i.loli.net/2021/04/13/NjVYHIugh5Kwaqt.jpg">
+<meta property="og:image" content="https://i.loli.net/2021/04/13/sl2dQI17oBvFGhE.jpg">
+<meta property="og:image" content="https://i.loli.net/2021/04/13/R3eIsVkQqXF5M96.jpg">
+<meta property="og:image" content="https://i.loli.net/2021/04/13/D7mcN3SFbRUxW6X.jpg">
+<meta property="og:image" content="https://i.loli.net/2021/04/13/FGSLYsqJn5Rde6w.jpg">
+<meta property="og:image" content="https://i.loli.net/2021/04/13/OjW81Ymfpc5lwiL.png">
+<meta property="article:published_time" content="2021-05-13T04:43:00.000Z">
+<meta property="article:modified_time" content="2021-06-09T08:57:10.848Z">
 <meta property="article:author" content="今是昨非">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="iOS">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/04/13/bzY94gBMKiscE5f.png">
   
     <link rel="alternative" href="/atom.xml" title="今是昨非的博客" type="application/atom+xml">
   
@@ -63,7 +80,7 @@
 	        
 				<li><a href="/tags/%E7%94%9F%E6%B4%BB/">生活</a></li>
 	        
-				<li><a href="/tags/iOS%2014/">iOS 14</a></li>
+				<li><a href="/tags/iOS/">iOS</a></li>
 	        
 			</ul>
 		</nav>
@@ -149,7 +166,7 @@
 		        
 					<li style="width: 20%"><a href="/tags/%E7%94%9F%E6%B4%BB/">生活</a></li>
 		        
-					<li style="width: 20%"><a href="/tags/iOS%2014/">iOS 14</a></li>
+					<li style="width: 20%"><a href="/tags/iOS/">iOS</a></li>
 		        
 				</ul>
 			</nav>
@@ -164,36 +181,184 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-如何让iOS推送播放语音" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/05/06/iOS%20%E6%B7%BB%E5%8A%A0%E6%A1%8C%E9%9D%A2%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2021-05-06T05:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-06</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/05/06/iOS%20%E6%B7%BB%E5%8A%A0%E6%A1%8C%E9%9D%A2%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F/">iOS APP添加桌面快捷方式</a>
+    <h1 class="article-title" itemprop="name">
+      如何让iOS推送播放语音
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2021/05/13/%E5%A6%82%E4%BD%95%E8%AE%A9iOS%E6%8E%A8%E9%80%81%E6%92%AD%E6%94%BE%E8%AF%AD%E9%9F%B3/" class="archive-article-date">
+  	<time datetime="2021-05-13T04:43:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>本文发表在《搜狐技术产品》公众号<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Gpu4sw0Zn4IBS-k5wvF__g">如何让iOS推送播放语音</a></strong></p>
+<h2 id="iOS-推送播放语音"><a href="#iOS-推送播放语音" class="headerlink" title="iOS 推送播放语音"></a>iOS 推送播放语音</h2><h3 id="一：背景"><a href="#一：背景" class="headerlink" title="一：背景"></a>一：背景</h3><p>iOS 推送播放语音的需求调研，即收到推送后，播放推送的文案，文案的内容不固定。类似于支付宝和微信的收款到账语音。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://littleliang.xyz/page/3/">只有iOS10以上才支持app被唤醒后在后台/锁屏状态下播放音频。所以iOS10以下的设备，在收到VoIP Push后只能在local push上设定一段固定铃声，这也是为什么iOS10以下只有“微信支付收款到账”。</a></li>
+<li>iOS 12.0之前，后台播放音频未被限制，直接使用Notification Service Extension (iOS 10.0以后才支持) 功能使用系统提供的功能AVSpeechSynthesizer即可。</li>
+<li>iOS 12.0之后，Notification Service Extension后台播放音频功能被限制，所以播放实现起来比较困难。<ul>
+<li>如果要上架商店，只有播放固定的音频，或固定拼接的音频，通过设置通知的声音或者发送本地通知设置本地通知的声音来播放</li>
+<li>如果无需上架商店，可以手动打开Notification Service Extension的后台播放，<span id="more"></span></li>
+</ul>
+</li>
+</ul>
+<h3 id="二：开发过程"><a href="#二：开发过程" class="headerlink" title="二：开发过程"></a>二：开发过程</h3><h4 id="a-Notification-Service-Extension"><a href="#a-Notification-Service-Extension" class="headerlink" title="a. Notification Service Extension"></a>a. Notification Service Extension</h4><p><img src="https://i.loli.net/2021/04/13/bzY94gBMKiscE5f.png" alt="1342050-74642172d12a47b5.png"></p>
+<p>项目添加了Notification Service Extension之后的逻辑，和没添加之前有所不同。如下图：<br>添加了之后，接受到推送时，会触发Notification Service Extension中的方法，在这个方法中，可以修改推送的标题、内容、声音。然后把修改后的推送展示出来。</p>
+<p>通知栏的生命周期：</p>
+<ul>
+<li>从通知叮一下展示（触发代码：self.contentHandler(self.bestAttemptContent);）出来到通知被收起（系统控制），大概有6秒左右的时间。</li>
+<li>如果收到通知后，没有呼出通知栏，最多30s系统会调用serviceExtensionTimeWillExpire方法中的self.contentHandler(self.bestAttemptContent)来呼出通知栏。</li>
+</ul>
+<p>要注意的是，Notification Service Extension和主项目不是同一个Target，所以主项目的文件和这个Target文件是不共享的。</p>
+<ul>
+<li>创建新文件的时候要注意勾选要添加到的Target<ul>
+<li>比如添加推送播放语音的类，需要勾选到Notification Service Extension Target下；</li>
+<li>拷贝播放语音的第三方SDK，需要勾选到Notification Service Extension Target下；</li>
+<li><font color="red">在第三方平台创建新应用时，要填写的bundleID也应该是Notification Service Extension Target对应的bundleID。</font>，这点尤其要注意，因为百度的测试账号离线SDK的添加只能添加一次，错了的话，就要用新的账号再去注册，血泪的教训，😂。</li>
+</ul>
+</li>
+<li>bundle目录的访问也不是同一个，可以通过App Group共享数据。</li>
+<li>打开后台播放时，其实也应该是Notification Service Extension Target下的后台播放，这个后面详细说明。</li>
+</ul>
+<p>创建步骤如下：</p>
+<ul>
+<li><p>创建Notificaiton Service Extension Target，选中Xcode项目，点击File -&gt; New -&gt; Target，选中Notification Service Extension Target。有两个很相似的，注意选对，如下图：<br><img src="https://i.loli.net/2021/04/13/7zvpnGPTMR84gyh.png" alt="截屏2021-04-13 下午3.01.00.png"></p>
+</li>
+<li><p>点击Next，输入Product Name<br><img src="https://i.loli.net/2021/04/13/oFAuwUXz8G3EL6f.png" alt="截屏2021-04-13 下午3.05.43.png"></p>
+</li>
+<li><p>点击完成，点击Activate<br><img src="https://i.loli.net/2021/04/13/nukm31MIZspAKTh.png" alt="截屏2021-04-13 下午3.05.51.png"></p>
+</li>
+<li><p>打开NotificationService.m中的文件，这个类就是Notificaiton Service Extension添加后自动创建的类，添加了之后，接受到推送的处理都可以在这个位置修改</p>
+<ul>
+<li>didReceiveNotificationRequest:withContentHandler:方法，其中的bestAttemptContent中的userInfo即包含了推送的详细信息。如果想要修改展示的标题和内容或者推送的语音，都在这个方法最后回掉前操作，<ul>
+<li>其中修改推送铃声时要注意：<ul>
+<li>语音的文件类型：<a target="_blank" rel="noopener" href="http://littleliang.xyz/">自定义铃声支持的声音格式包括，aiff、wav以及wav格式，铃声的长度必须小于30s，否则系统会播放默认的铃声</a>。</li>
+<li>音频文件存储的目录和读取的优先级，<a target="_blank" rel="noopener" href="http://littleliang.xyz/">主应用中的Library/Sounds文件夹中、AppGroups共享目录中的Library/Sounds文件夹中、main bundle</a></li>
+</ul>
+</li>
+<li>多条推送处理的问题，在didReceiveNotificationRequest:withContentHandler:方法中调用self.contentHandler(self.bestAttemptContent);，即会展示对应的通知，如果不调用此方法，最多30s系统会自动调用此方法<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/21b592e21999">，假设一次性来了10条通知，会发现，通知并没有弹出10次</a>，也没有按顺序一次次展示，所以多条推送如果没有处理，播放语音时就会出现问题。<ul>
+<li>在系统播放类AVSpeechSynthesizer的代理方法中，有播放完成的回掉speechSynthesizer:didFinishSpeechUtterance:，把呼出通知栏的代码self.contentHandler(self.bestAttemptContent)从didReceiveNotificationRequest:withContentHandler:方法中，移到播放完成的回掉方法中调用，即可保证语音按顺序一条条展示。（或者添加到数组或着OperationQueue中，播放完成继续下一条）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">@interface NotificationService ()</span><br><span class="line"></span><br><span class="line">@property (nonatomic, strong) void (^contentHandler)(UNNotificationContent *contentToDeliver);</span><br><span class="line">@property (nonatomic, strong) UNMutableNotificationContent *bestAttemptContent;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation NotificationService</span><br><span class="line"></span><br><span class="line">- (void)didReceiveNotificationRequest:(UNNotificationRequest *)request withContentHandler:(void (^)(UNNotificationContent * _Nonnull))contentHandler &#123;</span><br><span class="line">    self.contentHandler = contentHandler;</span><br><span class="line">    self.bestAttemptContent = [request.content mutableCopy];</span><br><span class="line">    </span><br><span class="line">    // Modify the notification content here...</span><br><span class="line">    // 修改推送的标题</span><br><span class="line">    //    self.bestAttemptContent.title = [NSString stringWithFormat:@&quot;%@ [modified]&quot;, self.bestAttemptContent.title];</span><br><span class="line">    </span><br><span class="line">    // 修改推送的声音，自定义铃声支持的声音格式包括，aiff、wav以及wav格式，铃声的长度必须小于30s，否则系统会播放默认的铃声。</span><br><span class="line">    //    self.bestAttemptContent.sound = [UNNotificationSound soundNamed:@&quot;a.wav&quot;];</span><br><span class="line"></span><br><span class="line">    // 播放处理</span><br><span class="line">    [self playVoiceWithInfo:self.bestAttemptContent.userInfo];</span><br><span class="line">    </span><br><span class="line">    self.contentHandler(self.bestAttemptContent);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)serviceExtensionTimeWillExpire &#123;</span><br><span class="line">    // Called just before the extension will be terminated by the system.</span><br><span class="line">    // Use this as an opportunity to deliver your &quot;best attempt&quot; at modified content, otherwise the original push payload will be used.</span><br><span class="line">    self.contentHandler(self.bestAttemptContent);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)playVoiceWithInfo:(NSDictionary *)userInfo &#123;</span><br><span class="line">    NSLog(@&quot;NotificationExtension content : %@&quot;,userInfo);</span><br><span class="line"></span><br><span class="line">    NSString *title = userInfo[@&quot;aps&quot;][@&quot;alert&quot;][@&quot;title&quot;];</span><br><span class="line">    NSString *subTitle = userInfo[@&quot;aps&quot;][@&quot;alert&quot;][@&quot;subtitle&quot;];</span><br><span class="line">    NSString *subMessage = userInfo[@&quot;aps&quot;][@&quot;alert&quot;][@&quot;body&quot;];</span><br><span class="line">    NSString *isRead = userInfo[@&quot;isRead&quot;];</span><br><span class="line">    NSString *isUseBaiDu = userInfo[@&quot;isBaiDu&quot;];</span><br><span class="line"></span><br><span class="line">    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback</span><br><span class="line">                                     withOptions:AVAudioSessionCategoryOptionDuckOthers error:nil];</span><br><span class="line">    [[AVAudioSession sharedInstance] setActive:YES</span><br><span class="line">                                   withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation</span><br><span class="line">                                         error:nil];</span><br><span class="line"></span><br><span class="line">    // Ps: 下面代码示例并没有多条播放的处理，还请注意</span><br><span class="line"></span><br><span class="line">    if ([isRead isEqual:@&quot;1&quot;]) &#123;</span><br><span class="line">        // 播放语音</span><br><span class="line">        if ([isUseBaiDu isEqual:@&quot;1&quot;]) &#123;</span><br><span class="line">            // 使用百度离线语音播放</span><br><span class="line">            [[BaiDuTtsUtils shared] playBaiDuTTSVoiceWithContent:title];</span><br><span class="line">        &#125;</span><br><span class="line">        else &#123;</span><br><span class="line">            // 使用系统语音播放</span><br><span class="line">            [[AppleTtsUtils shared] playAppleTTSVoiceWithContent:title];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        // 无需播放语音</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>其中AppleTtsUtils中实现如下，大致就是使用AVSpeechSynthesizer直接播放，设置音量和语速，需要注意的是，</p>
+<ul>
+<li>音量的设置<ul>
+<li>静音时是不会播放的</li>
+<li>实际播放的音量大小=设置的音量大小*系统音量的大小。所以即使设置了大音量，但是系统音量很小，播放的声音也很小。<a target="_blank" rel="noopener" href="http://littleliang.xyz/page/3/">（比如系统volume是0.5，AVAudioPlayer的音量是0.6，则最终的音量为0.5*0.6 =0.3）</a>。解决方案是：<a target="_blank" rel="noopener" href="http://littleliang.xyz/page/3/">最终的解决方案借鉴了进入收付款展示二维码时自动调节屏幕亮度的方案：如果屏幕亮度未达到阈值，则调高屏幕亮度到阈值，离开页面时，将亮度设回原亮度。同理，播放提示音时，若用户设置的系统音量小于阈值，则调节到阈值。提示音播放完毕后，将提示音调回原音量</a>，大致意思是：</li>
+</ul>
+</li>
+<li>数字的处理<ul>
+<li>数字转语音，采用zh-CN的voice后，数字的播放方式是几万几千几百几十几这种，可采用数字后面拼接空格的方式来处理；遍历内容的每一个字符串，如果是数字，则拼接一个空格到后面，最后播放时数字就会一个个读出来。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;AppleTtsUtils.h&quot;</span><br><span class="line">#import &lt;AVFoundation/AVFoundation.h&gt;</span><br><span class="line">#import &lt;AVKit/AVKit.h&gt;</span><br><span class="line"></span><br><span class="line">@interface AppleTtsUtils ()&lt;AVSpeechSynthesizerDelegate&gt;</span><br><span class="line"></span><br><span class="line">@property (nonatomic, strong) AVSpeechSynthesizer *speechSynthesizer;</span><br><span class="line">@property (nonatomic, strong) AVSpeechSynthesisVoice *speechSynthesisVoice;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation AppleTtsUtils</span><br><span class="line"></span><br><span class="line">+ (instancetype)shared &#123;</span><br><span class="line">    static id instance = nil;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        instance = [[self class] new];</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    return instance;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (BOOL)isNumber:(NSString *)str</span><br><span class="line">&#123;</span><br><span class="line">   if (str.length == 0) &#123;</span><br><span class="line">        return NO;</span><br><span class="line">    &#125;</span><br><span class="line">    NSString *regex = @&quot;[0-9]*&quot;;</span><br><span class="line">    NSPredicate *pred = [NSPredicate predicateWithFormat:@&quot;SELF MATCHES %@&quot;,regex];</span><br><span class="line">    if ([pred evaluateWithObject:str]) &#123;</span><br><span class="line">        return YES;</span><br><span class="line">    &#125;</span><br><span class="line">    return NO;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)playAppleTtsVoiceWithContent:(NSString *)content &#123;</span><br><span class="line">    </span><br><span class="line">    if ((content == nil) || (content.length &lt;= 0)) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    // 数字转语音，采用zh-CN的voice后，数字的播放方式是几万几千几百几十几这种，故而采用数字后面拼接空格的方式来处理；遍历内容的每一个字符串，如果是数字，则拼接一个空格到后面，最后播放时数字就会一个个读出来。</span><br><span class="line">    NSString *newResult = @&quot;&quot;;</span><br><span class="line">    for (int i = 0; i &lt; content.length; i++) &#123;</span><br><span class="line">        NSString *tempStr = [content substringWithRange:NSMakeRange(i, 1)];</span><br><span class="line">        newResult = [newResult stringByAppendingString:tempStr];</span><br><span class="line">        if ([self deptNumInputShouldNumber:tempStr] ) &#123;</span><br><span class="line">            newResult = [newResult stringByAppendingString:@&quot; &quot;];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    // Todo: 英文转语音</span><br><span class="line">    </span><br><span class="line">    AVSpeechUtterance *utterance = [AVSpeechUtterance speechUtteranceWithString:newResult];</span><br><span class="line">    utterance.rate = AVSpeechUtteranceDefaultSpeechRate;</span><br><span class="line">    utterance.voice = self.speechSynthesisVoice;</span><br><span class="line">    utterance.volume = 1.0;</span><br><span class="line">    utterance.rate = AVSpeechUtteranceDefaultSpeechRate;</span><br><span class="line">    [self.speechSynthesizer speakUtterance:utterance];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (AVSpeechSynthesizer *)speechSynthesizer &#123;</span><br><span class="line">    if (!_speechSynthesizer) &#123;</span><br><span class="line">        _speechSynthesizer = [[AVSpeechSynthesizer alloc] init];</span><br><span class="line">        _speechSynthesizer.delegate = self;</span><br><span class="line">    &#125;</span><br><span class="line">    return _speechSynthesizer;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (AVSpeechSynthesisVoice *)speechSynthesisVoice &#123;</span><br><span class="line">    if (!_speechSynthesisVoice) &#123;</span><br><span class="line">        _speechSynthesisVoice = [AVSpeechSynthesisVoice voiceWithLanguage:@&quot;zh-CN&quot;];</span><br><span class="line">    &#125;</span><br><span class="line">    return _speechSynthesisVoice;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didStartSpeechUtterance:(AVSpeechUtterance *)utterance &#123;</span><br><span class="line">    NSLog(@&quot;didStartSpeechUtterance&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didCancelSpeechUtterance:(AVSpeechUtterance *)utterance &#123;</span><br><span class="line">    NSLog(@&quot;didCancelSpeechUtterance&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didPauseSpeechUtterance:(AVSpeechUtterance *)utterance &#123;</span><br><span class="line">    NSLog(@&quot;didPauseSpeechUtterance&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didFinishSpeechUtterance:(AVSpeechUtterance *)utterance &#123;</span><br><span class="line">    NSLog(@&quot;didFinishSpeechUtterance&quot;);</span><br><span class="line">    [self.speechSynthesizer stopSpeakingAtBoundary:AVSpeechBoundaryWord];</span><br><span class="line"></span><br><span class="line">//    // 每一条语音播放完成后，我们调用此代码，用来呼出通知栏</span><br><span class="line">// 可通过Block回掉暴露给上层</span><br><span class="line">//    self.contentHandler(self.bestAttemptContent);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="b-百度TTS离线SDK添加"><a href="#b-百度TTS离线SDK添加" class="headerlink" title="b. 百度TTS离线SDK添加"></a>b. 百度TTS离线SDK添加</h4><ol>
+<li><p>打开<a target="_blank" rel="noopener" href="https://console.bce.baidu.com/ai/?_=1618187631547&fromai=1#/ai/speech/app/detail~appId=2383970">百度智能控制台</a>，选中应用列表，创建新的要测试的应用，创建后会有，这里bundleId要写创建的对应的Notification Service Extension的bundleId，而不是主项目的bundleId，一定要注意!!!如下图</p>
+<p> <img src="https://i.loli.net/2021/04/13/pWnS2qk9KOXoNR6.jpg" alt="1618303510485.jpg"></p>
+</li>
+<li><p>左侧选中离线SDK管理，点击添加，然后选中刚刚创建的应用，点击完成后，点击下载序列号列表，然后把AppId、AppKey、SecretKey、以及序列号存储，用于初始化离线SDK。如下图</p>
+<p> <img src="https://i.loli.net/2021/04/13/voO3fn1QsbMPIxh.jpg" alt="1618303458956.jpg"></p>
+</li>
+<li><p>左侧选中离线SDK管理时，点击右边的下载SDK，以及<a target="_blank" rel="noopener" href="https://ai.baidu.com/ai-doc/SPEECH/mk4nwu4s9">开发文档</a>，按照SDK的说法</p>
+<blockquote>
+<p>集成指南: 强烈建议用户首先运行SDK包中的Demo工程，Demo工程中详细说明了语音合成的使用方法，并提供了完整的示例。一般情况下，您只需参照demo工程即可完成所有的集成和配置工作。</p>
+</blockquote>
+</li>
+<li><p>所以，把SDK下载好了之后，打开BDSClientSample项目，然后把TTSViewController.mm文件中的APP_ID、API_KEY、SECRET_KEY和SN改为刚刚申请的，然后运行测试，看能否正常播放语音，播放成功说明申请的没有问题，就可以继续往项目中集成，要不然，集成到项目中发现不播放，会怀疑是SDK的问题。😂，以为集成后调试确实很容易让人怀疑人生。</p>
+</li>
+<li><p>把SDK解压后的BDSClientHeaders、BDSClientLib、BDSClientResource文件夹拖拽到Notification Service Extension的target下，注意勾选copy选项，然后把BDSClientLib文件夹下的.gitignore删除，要不然编译会失败，真的，不骗人，😂，踩坑指南<br> <img src="https://i.loli.net/2021/04/13/NjVYHIugh5Kwaqt.jpg" alt="1618304109702.jpg"></p>
+</li>
+<li><p>添加依赖的系统库，参考BDSClientSample项目中的依赖，注意添加到Notification Service Extension的target下，如下图：<br><img src="https://i.loli.net/2021/04/13/sl2dQI17oBvFGhE.jpg" alt="1618304468870.jpg"></p>
+</li>
+<li><p>done，编译Notification Service Extension的target，注意选对target，噢噢，这个地方还有个问题，新创建的target是根据Xcode的版本来的，所以还需要修改一下这个target兼容的最低target，要不然默认可能是14.4，然后运行调试不报错，能正常运行，但是断点不走，惊不惊喜，😂。<br><img src="https://i.loli.net/2021/04/13/R3eIsVkQqXF5M96.jpg" alt="1618304749612.jpg"></p>
+</li>
+<li><p>添加百度语音处理代码到Notification Service Extension的target下，如上面写的，BaiDuTtsUtils代码如下</p>
+<ul>
+<li>这里要注意的是， configureOfflineTTS方法中，offlineSpeechData和offlineTextData资源的加载，默认和Demo中写的一致即可，其实是BDSClientResource文件夹下TTS文件夹中的内容，如果下载的有别的语音文件，这里就加载自己下载的语音文件。</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;BaiDuTtsUtils.h&quot;</span><br><span class="line">#import &quot;BDSSpeechSynthesizer.h&quot;</span><br><span class="line"></span><br><span class="line">// 百度TTS</span><br><span class="line">NSString* BaiDuTTSAPP_ID = @&quot;Your_APP_ID&quot;;</span><br><span class="line">NSString* BaiDuTTSAPI_KEY = @&quot;Your_APP_KEY&quot;;</span><br><span class="line">NSString* BaiDuTTSSECRET_KEY = @&quot;Your_SECRET_KEY&quot;;</span><br><span class="line">NSString* BaiDuTTSSN = @&quot;Your_SN&quot;;</span><br><span class="line"></span><br><span class="line">@interface BaiDuTtsUtils ()&lt;BDSSpeechSynthesizerDelegate&gt;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation BaiDuTtsUtils</span><br><span class="line"></span><br><span class="line">+ (instancetype)shared &#123;</span><br><span class="line">    static id instance = nil;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        instance = [[self class] new];</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    return instance;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#pragma mark - baidu tts</span><br><span class="line"></span><br><span class="line">-(void)configureOfflineTTS&#123;</span><br><span class="line">    </span><br><span class="line">    NSError *err = nil;</span><br><span class="line">    NSString* offlineSpeechData = [[NSBundle mainBundle] pathForResource:@&quot;bd_etts_common_speech_m15_mand_eng_high_am-mgc_v3.6.0_20190117&quot; ofType:@&quot;dat&quot;];</span><br><span class="line">    NSString* offlineTextData = [[NSBundle mainBundle] pathForResource:@&quot;bd_etts_common_text_txt_all_mand_eng_middle_big_v3.4.2_20210319&quot; ofType:@&quot;dat&quot;];</span><br><span class="line">//    #error &quot;set offline engine license&quot;</span><br><span class="line">    if (offlineSpeechData == nil || offlineTextData == nil) &#123;</span><br><span class="line">        NSLog(@&quot;离线合成 资源文件为空！&quot;);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    err = [[BDSSpeechSynthesizer sharedInstance] loadOfflineEngine:offlineTextData speechDataPath:offlineSpeechData licenseFilePath:nil withAppCode:BaiDuTTSAPP_ID withSn:BaiDuTTSSN];</span><br><span class="line">    if(err)&#123;</span><br><span class="line">        NSLog(@&quot;Offline TTS init failed&quot;);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)playBaiDuTTSVoiceWithContent:(NSString *)voiceText &#123;</span><br><span class="line">    NSLog(@&quot;TTS version info: %@&quot;, [BDSSpeechSynthesizer version]);</span><br><span class="line">    </span><br><span class="line">    [BDSSpeechSynthesizer setLogLevel:BDS_PUBLIC_LOG_VERBOSE];</span><br><span class="line">    // 设置委托对象</span><br><span class="line">    [[BDSSpeechSynthesizer sharedInstance] setSynthesizerDelegate:self];</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    [self configureOfflineTTS];</span><br><span class="line"></span><br><span class="line">    [[BDSSpeechSynthesizer sharedInstance] setPlayerVolume:10];</span><br><span class="line">    [[BDSSpeechSynthesizer sharedInstance] setSynthParam:[NSNumber numberWithInteger:5] forKey:BDS_SYNTHESIZER_PARAM_SPEED];</span><br><span class="line"></span><br><span class="line">    // 开始合成并播放</span><br><span class="line">    NSError* speakError = nil;</span><br><span class="line">    NSInteger sentenceID = [[BDSSpeechSynthesizer sharedInstance] speakSentence:voiceText withError:&amp;speakError];</span><br><span class="line">    if (speakError) &#123;</span><br><span class="line">        NSLog(@&quot;错误: %ld, %@&quot;, (long)speakError.code, speakError.localizedDescription);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)synthesizerStartWorkingSentence:(NSInteger)SynthesizeSentence</span><br><span class="line">&#123;</span><br><span class="line">    NSLog(@&quot;Began synthesizing sentence %ld&quot;, (long)SynthesizeSentence);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)synthesizerFinishWorkingSentence:(NSInteger)SynthesizeSentence</span><br><span class="line">&#123;</span><br><span class="line">    NSLog(@&quot;Finished synthesizing sentence %ld&quot;, (long)SynthesizeSentence);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)synthesizerSpeechStartSentence:(NSInteger)SpeakSentence</span><br><span class="line">&#123;</span><br><span class="line">    NSLog(@&quot;Began playing sentence %ld&quot;, (long)SpeakSentence);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)synthesizerSpeechEndSentence:(NSInteger)SpeakSentence</span><br><span class="line">&#123;</span><br><span class="line">    NSLog(@&quot;Finished playing sentence %ld&quot;, (long)SpeakSentence);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="c-调试"><a href="#c-调试" class="headerlink" title="c. 调试"></a>c. 调试</h4><p>刺激的部分来了，上面都编译通过了没问题，使用推送调试，先运行一次主项目，然后选中Notification Service Extension Target运行，didReceiveNotificationRequest:withContentHandler:方法中添加断点，，给自己推送消息，会发现断点走到了这里，说明target的创建没有问题。</p>
+<p>然后控制推送参数的，isRead和isBaiDu参数，决定推送过来的语音是否走百度的语音播放。噢，说到推送参数，这个地方还需要在payload推送参数中添加”mutable-content = 1”字段，eg:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;aps&quot;: &#123;</span><br><span class="line">  &quot;alert&quot;: &#123;</span><br><span class="line">      &quot;title&quot;:&quot;标题&quot;,</span><br><span class="line">      &quot;subtitle: &quot;副标题&quot;,</span><br><span class="line">      &quot;body&quot;: &quot;内容&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;badge&quot;: 1,</span><br><span class="line">  &quot;sound&quot;: &quot;default&quot;,</span><br><span class="line">  &quot;mutable-content&quot;: &quot;1&quot;,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>推送调试，会发现运行正常，但是语音没有播放，不管是系统的还是百度的，哈哈哈，崩溃不。仔细看控制台，会发现，报错如下</p>
+<p>Ps: iOS 12.0之后，在Notification Service Extension调用系统播放AVSpeechSynthesizer时报的错误。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[AXTTSCommon] Failure starting audio queue alp! </span><br><span class="line">[AXTTSCommon] _BeginSpeaking: couldn&#x27;t begin playback</span><br></pre></td></tr></table></figure>
+<p>Ps: iOS 12.0之后，在Notification Service Extension调用百度的SDK直接播放时报的错误。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[ERROR][AudioBufPlayer.mm:1088]AudioQueue start errored error: 561015905 (!pla)</span><br><span class="line">[ERROR][AudioBufPlayer.mm:1099]Can&#x27;t begin playback while in background!</span><br></pre></td></tr></table></figure>
+
+<p>都是一个意思，即不能在后台播放音频。怎么解决呢，当然是添加backgroundMode字段了，打开主工程的Signing&amp;Capabilities，添加backgrondModes，勾选Audio, Airplay, and Picture in Picture，如下图<br><img src="https://i.loli.net/2021/04/13/D7mcN3SFbRUxW6X.jpg" alt="1618306139128.jpg"><br><img src="https://i.loli.net/2021/04/13/FGSLYsqJn5Rde6w.jpg" alt="1618306179927.jpg"></p>
+<p>OK，try again! 再次推送，会发现————还是不行，同样的报错，哈哈哈，绝望不，不好意思，我收敛一下，这个地方其实添加的没错，只不过要注意</p>
+<blockquote>
+<ol>
+<li>在Notification Service Extension配置了之后，发现收到通知后还是不会播放声音，在这个Extension的Target下打开plist，添加Required background modes字段，里面item0写上App plays audio or streams audio/video using AirPlay后，再次调试，发现百度的语音即可播放。</li>
+<li>这种方式审核时不被通过，因为这个Extension的target其实是没有backgroundMode的设置的，从Signing&amp;Capabilities中可以看出，直接添加backgroundMode是没有的。故而如果不是上线到苹果商店的，只是公司内部分发，可以用这种方式。</li>
+</ol>
+</blockquote>
+<p>添加了之后，再次推送，就会发现百度的语音就可以播放了，而且数字和英文、中文播放都十分完美，除了价格有些感人，其他的没毛病。<br>而系统的播放语音，如果先推送系统的，会发现不能播放，还是同样的报错；但是如果先推送了走百度的，百度播放了之后，再推送系统的，就会发现系统的也能播报，但是系统播报的英文和数字会有问题，记得处理，可以听一下英文字母E的发音，发音额。。。解决方案——暂无，还没找到，建议走第三方合成的语音。</p>
+<p>由于项目不需要上线商店，所以到这里其实就结束了。但是对于上线到商店到应用来说，这种处理方法是不行的，上线到商店的应用其实只有播放固定格式的音频一种解决方法，即替换推送的声音。使用固定格式的音频、或者固定格式的合成音频替换掉推送的声音，或者采用远程推送静音，发送多个本地通知，各个本地通知的声音替换掉这种方法。这些是从末尾的参考中得到的启示。</p>
+<h3 id="三、结论"><a href="#三、结论" class="headerlink" title="三、结论"></a>三、结论</h3><p>直接上图，整理后的思维导图如下，大部分比较复杂的处理逻辑其实是iOS 12.0之后的处理。<br><img src="https://i.loli.net/2021/04/13/OjW81Ymfpc5lwiL.png" alt="推送播放语音.png"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/21b592e21999">iOS 语音播报解决方案(实现支付宝/微信语音收款提示功能)</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/5e74e5c92f07">iOS极光推送+语音播报（支付宝收款播报）</a></li>
+<li><a target="_blank" rel="noopener" href="https://ai.baidu.com/ai-doc/SPEECH/mk4nwu4s9">百度离线合成iOS-SDK集成文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://console.bce.baidu.com/ai/?_=1618187631547&fromai=1#/ai/speech/app/detail~appId=2383970">百度智能控制台</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/1d43c168d0ec">iOS12.1之后语音播报问题解决，以及对Notification Service Extension的一些探索</a></li>
+<li><a target="_blank" rel="noopener" href="https://ai.baidu.com/forum/topic/show/940448?&pageNo=3">iOS12.1使用百度语音无法播报</a></li>
+<li><a target="_blank" rel="noopener" href="http://littleliang.xyz/2018/09/05/How-To-Implement-WeChat-Speech/">微信iOS收款到账语音提醒开发总结</a></li>
+<li><a target="_blank" rel="noopener" href="http://littleliang.xyz/2020/01/10/iOS13SpeechSynthesize/">iOS13微信收款到账语音提醒开发总结</a></li>
+</ul>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -203,339 +368,121 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">iOS 14</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/04/21/iOS%20%E5%88%A0%E9%99%A4SceneDelegate%E5%92%8CStoryboard/" class="archive-article-date">
-  	<time datetime="2021-04-21T05:23:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/04/21/iOS%20%E5%88%A0%E9%99%A4SceneDelegate%E5%92%8CStoryboard/">iOS 删除新创建项目中的SceneDelegate</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">iOS 14</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/04/19/iOS%20fastlane%E6%89%93%E5%8C%85/" class="archive-article-date">
-  	<time datetime="2021-04-19T11:48:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/04/19/iOS%20fastlane%E6%89%93%E5%8C%85/">iOS 自动打包</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">iOS 14</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
       
-        </div></section>
+
       
+
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/08/10/iOS%2014%20beta4%E5%B4%A9%E6%BA%83%E4%BF%AE%E6%94%B9/" class="archive-article-date">
-  	<time datetime="2020-08-10T02:57:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/08/10/iOS%2014%20beta4%E5%B4%A9%E6%BA%83%E4%BF%AE%E6%94%B9/">iOS 14 beta4崩溃修改</a>
-    </h1>
-  
+      </div>
+    </span>
+  </div>
+</div>
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">iOS 14</a>
-        		</li>
-      		
-		</ul>
-	</div>
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2021/05/13/%E5%A6%82%E4%BD%95%E8%AE%A9iOS%E6%8E%A8%E9%80%81%E6%92%AD%E6%94%BE%E8%AF%AD%E9%9F%B3/" alt="微信分享二维码">
+    </div>
+</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/12/iOS%2014%E9%80%82%E9%85%8D%E2%80%94%E2%80%94%E6%9F%A5%E6%89%BE%E5%93%AA%E4%BA%9BSDK%E4%BD%BF%E7%94%A8%E5%89%AA%E5%88%87%E6%9D%BF/" class="archive-article-date">
-  	<time datetime="2020-07-12T04:42:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-12</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2021/05/14/iOS%20%E5%B7%A5%E4%BD%9C%E6%97%A5%E2%80%94%E2%80%94%E8%BF%87%E6%BB%A4%E6%B3%95%E5%AE%9A%E8%8A%82%E5%81%87%E6%97%A5%E6%97%A5%E5%8E%86%E6%8F%90%E9%86%92%E7%9A%84%E5%AE%9E%E7%8E%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          iOS 工作日——过滤法定节假日日历提醒的实现
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/05/06/iOS%20%E6%B7%BB%E5%8A%A0%E6%A1%8C%E9%9D%A2%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">iOS APP添加桌面快捷方式</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/12/iOS%2014%E9%80%82%E9%85%8D%E2%80%94%E2%80%94%E6%9F%A5%E6%89%BE%E5%93%AA%E4%BA%9BSDK%E4%BD%BF%E7%94%A8%E5%89%AA%E5%88%87%E6%9D%BF/">iOS14适配一查找哪些SDK使用剪切板</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">iOS 14</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/28/Mapping%20architecture%20armv7%20to%20i386/" class="archive-article-date">
-  	<time datetime="2019-09-28T02:57:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/28/Mapping%20architecture%20armv7%20to%20i386/">Mapping architecture armv7 to i386</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">iOS 14</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/08/CocoaPods%E7%A7%81%E6%9C%89%E5%BA%93%E7%94%9F%E6%88%90/" class="archive-article-date">
-  	<time datetime="2019-09-08T02:57:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/08/CocoaPods%E7%A7%81%E6%9C%89%E5%BA%93%E7%94%9F%E6%88%90/">CocoaPods私有库生成</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">iOS 14</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/08/%E4%B8%80%E4%B8%AA%E8%AF%A1%E5%BC%82%E7%BA%BF%E4%B8%8ABug%E7%9A%84%E4%BF%AE%E6%94%B9/" class="archive-article-date">
-  	<time datetime="2019-09-08T02:57:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/08/%E4%B8%80%E4%B8%AA%E8%AF%A1%E5%BC%82%E7%BA%BF%E4%B8%8ABug%E7%9A%84%E4%BF%AE%E6%94%B9/">一个诡异线上Bug的修改</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">iOS 14</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -558,9 +505,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
@@ -628,7 +575,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">iOS 14</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
