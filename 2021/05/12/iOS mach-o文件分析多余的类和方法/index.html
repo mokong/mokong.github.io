@@ -6,17 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>今是昨非的博客</title>
+  <title>iOS mach-o文件分析多余的类和方法 | 今是昨非的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="iOS技术分享">
-<meta property="og:type" content="website">
-<meta property="og:title" content="今是昨非的博客">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+  <meta name="description" content="mach-o文件分析多余的类和方法.md背景最近做包大小优化，在做项目代码优化时，其中有一个过程是分析Mach-O文件，看网上很多文章都说通过otool分析Mach-O，获取__objc_classrefs、__objc_classlist等，然后找出无用类和无用方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS mach-o文件分析多余的类和方法">
+<meta property="og:url" content="http://yoursite.com/2021/05/12/iOS%20mach-o%E6%96%87%E4%BB%B6%E5%88%86%E6%9E%90%E5%A4%9A%E4%BD%99%E7%9A%84%E7%B1%BB%E5%92%8C%E6%96%B9%E6%B3%95/index.html">
 <meta property="og:site_name" content="今是昨非的博客">
-<meta property="og:description" content="iOS技术分享">
+<meta property="og:description" content="mach-o文件分析多余的类和方法.md背景最近做包大小优化，在做项目代码优化时，其中有一个过程是分析Mach-O文件，看网上很多文章都说通过otool分析Mach-O，获取__objc_classrefs、__objc_classlist等，然后找出无用类和无用方法。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/05/11/pwUQhVd2Bl6cHMo.png">
+<meta property="og:image" content="https://i.loli.net/2021/05/11/jVdJS41eg2KOQHY.png">
+<meta property="og:image" content="https://i.loli.net/2021/05/12/r3EJgqmRUTzPInW.png">
+<meta property="og:image" content="https://i.loli.net/2021/05/12/546LptyM28FsNYq.png">
+<meta property="og:image" content="https://i.loli.net/2021/05/12/xSdk3uiNmGBohrE.png">
+<meta property="article:published_time" content="2021-05-12T02:33:00.000Z">
+<meta property="article:modified_time" content="2021-06-09T09:21:39.811Z">
 <meta property="article:author" content="今是昨非">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="iOS">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/05/11/pwUQhVd2Bl6cHMo.png">
   
     <link rel="alternative" href="/atom.xml" title="今是昨非的博客" type="application/atom+xml">
   
@@ -164,581 +174,370 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-iOS 14 beta4崩溃修改" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-iOS mach-o文件分析多余的类和方法" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/08/10/iOS%2014%20beta4%E5%B4%A9%E6%BA%83%E4%BF%AE%E6%94%B9/">iOS beta4崩溃修改</a>
+    <h1 class="article-title" itemprop="name">
+      iOS mach-o文件分析多余的类和方法
     </h1>
   
 
         
-        <a href="/2020/08/10/iOS%2014%20beta4%E5%B4%A9%E6%BA%83%E4%BF%AE%E6%94%B9/" class="archive-article-date">
-  	<time datetime="2020-08-10T02:57:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-10</time>
+        <a href="/2021/05/12/iOS%20mach-o%E6%96%87%E4%BB%B6%E5%88%86%E6%9E%90%E5%A4%9A%E4%BD%99%E7%9A%84%E7%B1%BB%E5%92%8C%E6%96%B9%E6%B3%95/" class="archive-article-date">
+  	<time datetime="2021-05-12T02:33:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-12</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="iOS-beta4崩溃修改"><a href="#iOS-beta4崩溃修改" class="headerlink" title="iOS beta4崩溃修改"></a>iOS beta4崩溃修改</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>升级iOSBeta4后，有用户反馈使用我们APP时会崩溃，有登录的、查看详情的，都会出现崩溃。我们查看Bugly数据也发现崩溃率上升了0.02%，直接超出了指定的崩溃指标。虽然是由于升级beta版系统导致的，但还是要排查出具体原因，然后尽快适配。所以我说一下我发现的哪个API导致的，供大家参考一下。</p>
-        
-          <a class="article-more-a" href="/2020/08/10/iOS%2014%20beta4%E5%B4%A9%E6%BA%83%E4%BF%AE%E6%94%B9/#more">more >></a>
-        
-      
+        <h1 id="mach-o文件分析多余的类和方法-md"><a href="#mach-o文件分析多余的类和方法-md" class="headerlink" title="mach-o文件分析多余的类和方法.md"></a>mach-o文件分析多余的类和方法.md</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>最近做包大小优化，在做项目代码优化时，其中有一个过程是分析Mach-O文件，看网上很多文章都说通过otool分析Mach-O，获取__objc_classrefs、__objc_classlist等，然后找出无用类和无用方法。</p>
+<span id="more"></span>
 
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/08/10/iOS%2014%20beta4%E5%B4%A9%E6%BA%83%E4%BF%AE%E6%94%B9/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-iOS 14适配——查找哪些SDK使用剪切板" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/12/iOS%2014%E9%80%82%E9%85%8D%E2%80%94%E2%80%94%E6%9F%A5%E6%89%BE%E5%93%AA%E4%BA%9BSDK%E4%BD%BF%E7%94%A8%E5%89%AA%E5%88%87%E6%9D%BF/">iOS14适配一查找哪些SDK使用剪切板</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/12/iOS%2014%E9%80%82%E9%85%8D%E2%80%94%E2%80%94%E6%9F%A5%E6%89%BE%E5%93%AA%E4%BA%9BSDK%E4%BD%BF%E7%94%A8%E5%89%AA%E5%88%87%E6%9D%BF/" class="archive-article-date">
-  	<time datetime="2020-07-12T04:42:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="iOS14适配一查找哪些SDK使用剪切板"><a href="#iOS14适配一查找哪些SDK使用剪切板" class="headerlink" title="iOS14适配一查找哪些SDK使用剪切板"></a>iOS14适配一查找哪些SDK使用剪切板</h2><h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>iOS14公测版发出之后，我们app出现了从后台唤起会弹出 读取剪切板的 提示，安全要求要赶紧查，全局搜索了我们APP，发现并没有读取剪切板的代码，比窦娥还冤，只能是第三方SDK的问题了，但是项目里集成了十几个第三方SDK，一个个排查删除，万一两个SDK都有，这个排列组合可能性就太多了。</p>
-        
-          <a class="article-more-a" href="/2020/07/12/iOS%2014%E9%80%82%E9%85%8D%E2%80%94%E2%80%94%E6%9F%A5%E6%89%BE%E5%93%AA%E4%BA%9BSDK%E4%BD%BF%E7%94%A8%E5%89%AA%E5%88%87%E6%9D%BF/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/12/iOS%2014%E9%80%82%E9%85%8D%E2%80%94%E2%80%94%E6%9F%A5%E6%89%BE%E5%93%AA%E4%BA%9BSDK%E4%BD%BF%E7%94%A8%E5%89%AA%E5%88%87%E6%9D%BF/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-iOS 13 适配" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/07/iOS%2013%20%E9%80%82%E9%85%8D/">iOS 13 适配</a>
-    </h1>
-  
-
-        
-        <a href="/2019/10/07/iOS%2013%20%E9%80%82%E9%85%8D/" class="archive-article-date">
-  	<time datetime="2019-10-07T02:57:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="iOS-13-适配"><a href="#iOS-13-适配" class="headerlink" title="iOS 13 适配"></a>iOS 13 适配</h2><p>转自<a target="_blank" rel="noopener" href="https://blog.csdn.net/Han_Laomo/article/details/101111427">iOS 13采坑记录</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/8183d086b931">iOS 13适配总结</a></p>
-<ol>
-<li>UIViewController Present出来的样式修改<blockquote>
-<p>iOS 13默认的modalPresentationStyle是UIModalPresentationAutomatic，可能不符合我们的要求，改回之前的模式要用UIModalPresentationFullScreen.</p>
-</blockquote>
-</li>
+<p>比如：<code>无用类通过 otool 逆向Mach-O文件 __DATA.__objc_classlist段和__DATA.__objc_classrefs 段获取所有 OC 类和被引用的类，两个集合差值为无用类集合，结合 nm -nm 得到地址和对应类名符号化无用类类名</code>来自<a target="_blank" rel="noopener" href="http://www.cocoachina.com/articles/859032">干货！京东商城iOS App瘦身实践</a></p>
+<p>又或者<code>结合LinkMap文件的__TEXT.__text，通过正则表达式([+|-][.+\s(.+)])，我们可以提取当前可执行文件里所有objc类方法和实例方法（SelectorsAll）。再使用otool命令otool -v -s __DATA __objc_selrefs逆向__DATA.__objc_selrefs段，提取可执行文件里引用到的方法名（UsedSelectorsAll），我们可以大致分析出SelectorsAll里哪些方法是没有被引用的（SelectorsAll-UsedSelectorsAll）</code>来自<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzAwNDY1ODY2OQ==&mid=207986417&idx=1&sn=77ea7d8e4f8ab7b59111e78c86ccfe66&3rd=MzA3MDU4NTYzMw==&scene=6#rd">iOS微信安装包瘦身</a></p>
+<p>上面那些话看起来简简单单的，但是笔者操作起来确遇到了很多困难，首先otool是什么？然后__DATA.__objc_classlist是什么？哪里来的？怎么跟otool命令结合起来使用？怎么获取差值？怎么结合使用正则表达式，等等？笔者在没有大佬带领的情况下，只能是一步步趟过来。</p>
+<p>于是笔者这两天就自己小马过河，实践了一下，做成了一个类似<a target="_blank" rel="noopener" href="https://github.com/huanxsd/LinkMap">LinkMap</a>分析的工具——<a target="_blank" rel="noopener" href="https://github.com/mokong/OtoolAnalyse">OtoolAnalyse</a>，分享一下具体的实现过程和原理。</p>
+<p>主要涉及到otool命令的简单使用、<a target="_blank" rel="noopener" href="https://github.com/mokong/OtoolAnalyse">OtoolAnalyse</a>的实现原理两部分。</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>首先来看<code>Mach-O</code>是什么，<code>Mach-O</code>是<code>Mach Object</code>文件格式的缩写，是一种记录可执行文件、对象代码、共享库、动态加载代码和内存转储的文件格式。</p>
+<p><a target="_blank" rel="noopener" href="https://www.desgard.com/iOS-Source-Probe/C/mach-o/Mach-O%20%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E6%8E%A2%E7%B4%A2.html">Mach-O文件主要由3部分组成：</a></p>
+<ul>
+<li>Mach Header: 描述 Mach-O 的CPU架构、文件类型、加载命令等信息</li>
+<li>Load Command: 描述文件中数据等具体组织结构，不同数据类型使用不同等加载命令表示</li>
+<li>Data: Data中每一个段(Segment)的数据保存在此，段用来存放数据和代码</li>
+</ul>
+<p>列举Data常见的Section，来自<a target="_blank" rel="noopener" href="https://www.desgard.com/iOS-Source-Probe/C/mach-o/Mach-O%20%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E6%8E%A2%E7%B4%A2.html">Mach-O 文件格式探索</a></p>
+<table>
+<thead>
+<tr>
+<th>表头</th>
+<th>表头</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Section</td>
+<td>用途</td>
+</tr>
+<tr>
+<td>__TEXT.__text</td>
+<td>主程序代码</td>
+</tr>
+<tr>
+<td>__TEXT.__cstring</td>
+<td>C 语言字符串</td>
+</tr>
+<tr>
+<td>__TEXT.__const</td>
+<td>const 关键字修饰的常量</td>
+</tr>
+<tr>
+<td>__TEXT.__stubs</td>
+<td>用于 Stub 的占位代码，很多地方称之为桩代码。</td>
+</tr>
+<tr>
+<td>__TEXT.__stubs_helper</td>
+<td>当 Stub 无法找到真正的符号地址后的最终指向</td>
+</tr>
+<tr>
+<td>__TEXT.__objc_methname</td>
+<td>Objective-C 方法名称</td>
+</tr>
+<tr>
+<td>__TEXT.__objc_methtype</td>
+<td>Objective-C 方法类型</td>
+</tr>
+<tr>
+<td>__TEXT.__objc_classname</td>
+<td>Objective-C 类名称</td>
+</tr>
+<tr>
+<td>__DATA.__data</td>
+<td>初始化过的可变数据</td>
+</tr>
+<tr>
+<td>__DATA.__la_symbol_ptr</td>
+<td>lazy binding 的指针表，表中的指针一开始都指向 __stub_helper</td>
+</tr>
+<tr>
+<td>__DATA.nl_symbol_ptr</td>
+<td>非 lazy binding 的指针表，每个表项中的指针都指向一个在装载过程中，被动态链机器搜索完成的符号</td>
+</tr>
+<tr>
+<td>__DATA.__const</td>
+<td>没有初始化过的常量</td>
+</tr>
+<tr>
+<td>__DATA.__cfstring</td>
+<td>程序中使用的 Core Foundation 字符串（CFStringRefs）</td>
+</tr>
+<tr>
+<td>__DATA.__bss</td>
+<td>BSS，存放为初始化的全局变量，即常说的静态内存分配</td>
+</tr>
+<tr>
+<td>__DATA.__common</td>
+<td>没有初始化过的符号声明</td>
+</tr>
+<tr>
+<td>__DATA.__objc_classlist</td>
+<td>Objective-C 类列表</td>
+</tr>
+<tr>
+<td>__DATA.__objc_protolist</td>
+<td>Objective-C 原型</td>
+</tr>
+<tr>
+<td>__DATA.__objc_imginfo</td>
+<td>Objective-C 镜像信息</td>
+</tr>
+<tr>
+<td>__DATA.__objc_selrefs</td>
+<td>Objective-C 方法引用</td>
+</tr>
+<tr>
+<td>__DATA.__objc_protorefs</td>
+<td>Objective-C 原型引用</td>
+</tr>
+<tr>
+<td>__DATA.__objc_superrefs</td>
+<td>Objective-C 超类引用</td>
+</tr>
+</tbody></table>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>Mach-O文件获取：Xcode打包好的iPA，改后缀名为.zip，然后解压缩得到payload文件夹，其中有xxx.app，右键显示包内容，其中有xxx的exec文件，即是Mach-O文件。</p>
+<h3 id="otool命令简单使用"><a href="#otool命令简单使用" class="headerlink" title="otool命令简单使用"></a>otool命令简单使用</h3><p>比如项目名字为TestClass，进入TestClass exec所在的文件夹</p>
+<ul>
+<li><ol>
+<li>otool符号格式化，输出项目的类结构及定义的方法</li>
 </ol>
-        
-          <a class="article-more-a" href="/2019/10/07/iOS%2013%20%E9%80%82%E9%85%8D/#more">more >></a>
-        
+</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 直接在命令行查看</span></span><br><span class="line">otool <span class="operator">-</span>arch arm64 <span class="operator">-</span>ov <span class="type">TestClass</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 或者输出对应信息到指定文件，比如导出到otool.txt</span></span><br><span class="line">otool <span class="operator">-</span>arch arm64 <span class="operator">-</span>ov <span class="type">TestClass</span> <span class="operator">&gt;</span> otool.txt</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><ol start="2">
+<li>查看链接了哪些库</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">otool <span class="operator">-</span><span class="type">L</span> <span class="type">TestClass</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><ol start="3">
+<li>筛选是否链接了某个指定的库，比如CoreFoundation</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">otool <span class="operator">-</span><span class="type">L</span> <span class="type">TestClass</span> <span class="operator">|</span> grep <span class="type">CoreFoundation</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><ol start="4">
+<li>查看Mach-O所有类集合</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 直接在命令行查看</span></span><br><span class="line">otool <span class="operator">-</span>arch arm64 <span class="operator">-</span>v <span class="operator">-</span>s __DATA __objc_classlist <span class="type">TestClass</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 或者输出对应信息到指定文件，比如导出到classlist.txt</span></span><br><span class="line">otool <span class="operator">-</span>arch arm64 <span class="operator">-</span>v <span class="operator">-</span>s __DATA __objc_classlist <span class="type">TestClass</span> <span class="operator">&gt;</span> classlist.txt</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><ol start="5">
+<li>查看Mach-O所有使用类的集合</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 直接在命令行查看</span></span><br><span class="line">otool <span class="operator">-</span>arch arm64 <span class="operator">-</span>v <span class="operator">-</span>s __DATA __objc_classrefs <span class="type">TestClass</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 或者输出对应信息到指定文件，比如导出到classrefs.txt</span></span><br><span class="line">otool <span class="operator">-</span>arch arm64 <span class="operator">-</span>v <span class="operator">-</span>s __DATA __objc_classrefs <span class="type">TestClass</span> <span class="operator">&gt;</span> classrefs.txt</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><ol start="6">
+<li>查看Mach-O所有使用方法的集合</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 直接在命令行查看</span></span><br><span class="line">otool <span class="operator">-</span>arch arm64 <span class="operator">-</span>v <span class="operator">-</span>s __DATA __objc_selrefs <span class="type">TestClass</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 或者输出对应信息到指定文件，比如导出到classrefs.txt</span></span><br><span class="line">otool <span class="operator">-</span>arch arm64 <span class="operator">-</span>v <span class="operator">-</span>s __DATA __objc_selrefs <span class="type">TestClass</span> <span class="operator">&gt;</span> selrefs.txt</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><ol start="7">
+<li>查看c语言字符串</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">otool <span class="operator">-</span>v <span class="operator">-</span>s __TEXT __cstring <span class="type">TestClass</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>到这里为止，otool是什么？__DATA.__objc_classlist是什么？哪里来的？怎么跟otool命令结合起来使用？这几个问题解决了。但是接下来的，怎么获取差值？怎么结合使用正则表达式？要怎么解决呢？</p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903921169727496">iOS代码瘦身实践:删除无用的类</a>这篇文章里使用python代码有实现的过程。但是笔者走了另一条路，这里分享一下，希望大家多多指点。</p>
+<h3 id="OtoolAnalyse的实现原理"><a href="#OtoolAnalyse的实现原理" class="headerlink" title="OtoolAnalyse的实现原理"></a><a target="_blank" rel="noopener" href="https://github.com/mokong/OtoolAnalyse">OtoolAnalyse</a>的实现原理</h3><p>首先，参考otool的命令<code>otool -arch arm64 -ov TestClass &gt; otool.txt</code>，生成otool.txt</p>
+<p>打开otool.txt，搜索<code>Contents of (__DATA</code>，会发现</p>
+<ul>
+<li><code>Contents of (__DATA_CONST,__objc_classlist) section</code> 或者 <code>Contents of (__DATA,__objc_classlist) section</code></li>
+<li><code>Contents of (__DATA,__objc_classrefs) section</code></li>
+<li><code>Contents of (__DATA,__objc_superrefs) section</code></li>
+<li><code>Contents of (__DATA,__objc_catlist) section</code></li>
+<li><code>Contents of (__DATA_CONST,__objc_protolist) section</code> 或者 <code>Contents of (__DATA,__objc_protolist) section</code></li>
+<li><code>Contents of (__DATA,__objc_selrefs) section</code></li>
+<li><code>Contents of (__DATA_CONST,__objc_imageinfo) section</code></li>
+</ul>
+<p>结合下面的表格来看，就能知道每个section代表的含义是什么了。</p>
+<table>
+<thead>
+<tr>
+<th>表头</th>
+<th>表头</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Section</td>
+<td>用途</td>
+</tr>
+<tr>
+<td>__DATA.__objc_classlist</td>
+<td>Objective-C 类列表</td>
+</tr>
+<tr>
+<td>__DATA.__objc_classrefs</td>
+<td>Objective-C 类引用</td>
+</tr>
+<tr>
+<td>__DATA.__objc_superrefs</td>
+<td>Objective-C 超类引用</td>
+</tr>
+<tr>
+<td>__DATA.__objc_catlist</td>
+<td>Objective-C category列表</td>
+</tr>
+<tr>
+<td>__DATA.__objc_protolist</td>
+<td>Objective-C 原型</td>
+</tr>
+<tr>
+<td>__DATA.__objc_selrefs</td>
+<td>Objective-C 方法引用</td>
+</tr>
+<tr>
+<td>__DATA.__objc_imginfo</td>
+<td>Objective-C 镜像信息</td>
+</tr>
+</tbody></table>
+<h4 id="分析无用类"><a href="#分析无用类" class="headerlink" title="分析无用类"></a>分析无用类</h4><p><strong>获取__objc_classlist</strong></p>
+<p>来看<code>__objc_classlist</code>所在的section</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="number">0000000100008028</span> <span class="number">0x10000d450</span> <span class="comment">// 后面的地址0x10000d450，是class的唯一地址</span></span><br><span class="line">    isa        <span class="number">0x10000d478</span></span><br><span class="line">    superclass <span class="number">0x0</span> _OBJC_CLASS_<span class="variable">$_UIViewController</span> <span class="comment">// 父类</span></span><br><span class="line">    cache      <span class="number">0x0</span> __objc_empty_cache</span><br><span class="line">    vtable     <span class="number">0x0</span></span><br><span class="line">    data       <span class="number">0x10000c0b8</span></span><br><span class="line">        flags          <span class="number">0x90</span></span><br><span class="line">        instanceStart  <span class="number">8</span></span><br><span class="line">        instanceSize   <span class="number">8</span></span><br><span class="line">        reserved       <span class="number">0x0</span></span><br><span class="line">        ivarLayout     <span class="number">0x0</span></span><br><span class="line">        name           <span class="number">0x1000073cd</span> <span class="type">SecondViewController</span> <span class="comment">// 类名</span></span><br><span class="line">        baseMethods    <span class="number">0x1000064f0</span></span><br><span class="line">            entsize <span class="number">12</span> (relative)</span><br><span class="line">            count   <span class="number">1</span></span><br><span class="line">            name    <span class="number">0x6ed8</span> (<span class="number">0x10000d3d0</span> extends past end of file)</span><br><span class="line">            types   <span class="number">0xf6a</span> (<span class="number">0x100007466</span> extends past end of file)</span><br><span class="line">            imp     <span class="number">0xfffffbb8</span> (<span class="number">0x1000060b8</span> extends past end of file)</span><br><span class="line">        baseProtocols  <span class="number">0x0</span></span><br><span class="line">        ivars          <span class="number">0x0</span></span><br><span class="line">        weakIvarLayout <span class="number">0x0</span></span><br><span class="line">        baseProperties <span class="number">0x0</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这里我们通过单个类的信息结构，可以看出其中包含类的地址、类的名字、父类的地址，而笔者想做的是通过固定的代码获取类的信息，然后放到字典中，直到<code>__objc_classlis</code>这个section结束，然后就获取了所有类名字和地址。</p>
+<p>那要怎么做呢？由于文件不是固定的json格式，所以这里难住了，没办法取对应的信息。笔者对比多个类结构，希望能总结出来固定的规律。</p>
+<p><img src="https://i.loli.net/2021/05/11/pwUQhVd2Bl6cHMo.png" alt="WX20210511-182718.png"></p>
+<p>参考<a target="_blank" rel="noopener" href="https://github.com/huanxsd/LinkMap">LinkMap</a>项目的symbolMapFromContent方法实现，笔者发现，它的匹配是读取文件，然后单行单行，匹配文案，设置标记位，从而解析对应信息。代码如下</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- (<span class="built_in">NSMutableDictionary</span> *)symbolMapFromContent:(<span class="built_in">NSString</span> *)content &#123;</span><br><span class="line">    <span class="built_in">NSMutableDictionary</span> &lt;<span class="built_in">NSString</span> *,SymbolModel *&gt;*symbolMap = [<span class="built_in">NSMutableDictionary</span> new];</span><br><span class="line">    <span class="comment">// 符号文件列表</span></span><br><span class="line">    <span class="built_in">NSArray</span> *lines = [content componentsSeparatedByString:<span class="string">@&quot;\n&quot;</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">BOOL</span> reachFiles = <span class="literal">NO</span>;</span><br><span class="line">    <span class="built_in">BOOL</span> reachSymbols = <span class="literal">NO</span>;</span><br><span class="line">    <span class="built_in">BOOL</span> reachSections = <span class="literal">NO</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">NSString</span> *line <span class="keyword">in</span> lines) &#123;</span><br><span class="line">        <span class="keyword">if</span>([line hasPrefix:<span class="string">@&quot;#&quot;</span>]) &#123;</span><br><span class="line">            <span class="keyword">if</span>([line hasPrefix:<span class="string">@&quot;# Object files:&quot;</span>])</span><br><span class="line">                reachFiles = <span class="literal">YES</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> ([line hasPrefix:<span class="string">@&quot;# Sections:&quot;</span>])</span><br><span class="line">                reachSections = <span class="literal">YES</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> ([line hasPrefix:<span class="string">@&quot;# Symbols:&quot;</span>])</span><br><span class="line">                reachSymbols = <span class="literal">YES</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span>(reachFiles == <span class="literal">YES</span> &amp;&amp; reachSections == <span class="literal">NO</span> &amp;&amp; reachSymbols == <span class="literal">NO</span>) &#123;</span><br><span class="line">                <span class="built_in">NSRange</span> range = [line rangeOfString:<span class="string">@&quot;]&quot;</span>];</span><br><span class="line">                <span class="keyword">if</span>(range.location != <span class="built_in">NSNotFound</span>) &#123;</span><br><span class="line">                    SymbolModel *symbol = [SymbolModel new];</span><br><span class="line">                    symbol.file = [line substringFromIndex:range.location+<span class="number">1</span>];</span><br><span class="line">                    <span class="built_in">NSString</span> *key = [line substringToIndex:range.location+<span class="number">1</span>];</span><br><span class="line">                    symbolMap[key] = symbol;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (reachFiles == <span class="literal">YES</span> &amp;&amp; reachSections == <span class="literal">YES</span> &amp;&amp; reachSymbols == <span class="literal">YES</span>) &#123;</span><br><span class="line">                <span class="built_in">NSArray</span> &lt;<span class="built_in">NSString</span> *&gt;*symbolsArray = [line componentsSeparatedByString:<span class="string">@&quot;\t&quot;</span>];</span><br><span class="line">                <span class="keyword">if</span>(symbolsArray.count == <span class="number">3</span>) &#123;</span><br><span class="line">                    <span class="built_in">NSString</span> *fileKeyAndName = symbolsArray[<span class="number">2</span>];</span><br><span class="line">                    <span class="built_in">NSUInteger</span> size = strtoul([symbolsArray[<span class="number">1</span>] UTF8String], <span class="literal">nil</span>, <span class="number">16</span>);</span><br><span class="line">                    </span><br><span class="line">                    <span class="built_in">NSRange</span> range = [fileKeyAndName rangeOfString:<span class="string">@&quot;]&quot;</span>];</span><br><span class="line">                    <span class="keyword">if</span>(range.location != <span class="built_in">NSNotFound</span>) &#123;</span><br><span class="line">                        <span class="built_in">NSString</span> *key = [fileKeyAndName substringToIndex:range.location+<span class="number">1</span>];</span><br><span class="line">                        SymbolModel *symbol = symbolMap[key];</span><br><span class="line">                        <span class="keyword">if</span>(symbol) &#123;</span><br><span class="line">                            symbol.size += size;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> symbolMap;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>所以，笔者发现，如果按照同样的逻辑，单行读取+标记位时，同样的逻辑也可以使用，即每次<code>000000010</code>开头时，说明是一个新类的开始，存储对应的地址，设置可以存储名字标记位，然后读取到name时，就用<code>&#123; classAddress: className &#125;</code>的格式存储下来，并把标识位清除，直到下一行包含<code>000000010</code>时，再重置标识位为YES。代码如下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="built_in">NSString</span> *kConstPrefix = <span class="string">@&quot;Contents of (__DATA&quot;</span>;</span><br><span class="line"><span class="keyword">static</span> <span class="built_in">NSString</span> *kQueryClassList = <span class="string">@&quot;__objc_classlist&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取classList的类</span></span><br><span class="line">- (<span class="built_in">NSMutableDictionary</span> *)classListFromContent:(<span class="built_in">NSString</span> *)content &#123;</span><br><span class="line">    <span class="comment">// 符号文件列表</span></span><br><span class="line">    <span class="built_in">NSArray</span> *lines = [content componentsSeparatedByString:<span class="string">@&quot;\n&quot;</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">BOOL</span> canAddName = <span class="literal">NO</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">NSMutableDictionary</span> *classListResults = [<span class="built_in">NSMutableDictionary</span> dictionary];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSString</span> *addressStr = <span class="string">@&quot;&quot;</span>;</span><br><span class="line">    <span class="built_in">BOOL</span> classListBegin = <span class="literal">NO</span>;</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">NSString</span> *line <span class="keyword">in</span> lines) &#123;</span><br><span class="line">        <span class="keyword">if</span>([line containsString:kConstPrefix] &amp;&amp; [line containsString:kQueryClassList]) &#123;</span><br><span class="line">            classListBegin = <span class="literal">YES</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> ([line containsString:kConstPrefix]) &#123;</span><br><span class="line">            classListBegin = <span class="literal">NO</span>;</span><br><span class="line">            <span class="keyword">break</span>;;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (classListBegin) &#123;</span><br><span class="line">            <span class="keyword">if</span>([line containsString:<span class="string">@&quot;000000010&quot;</span>]) &#123;</span><br><span class="line">                <span class="built_in">NSArray</span> *components = [line componentsSeparatedByString:<span class="string">@&quot; &quot;</span>];</span><br><span class="line">                <span class="built_in">NSString</span> *address = [components lastObject];</span><br><span class="line">                addressStr = address;</span><br><span class="line">                canAddName = <span class="literal">YES</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (canAddName &amp;&amp; [line containsString:<span class="string">@&quot;name&quot;</span>]) &#123;</span><br><span class="line">                    <span class="built_in">NSArray</span> *components = [line componentsSeparatedByString:<span class="string">@&quot; &quot;</span>];</span><br><span class="line">                    <span class="built_in">NSString</span> *className = [components lastObject];</span><br><span class="line">                    [classListResults setValue:className forKey:addressStr];</span><br><span class="line">                    addressStr = <span class="string">@&quot;&quot;</span>;</span><br><span class="line">                    canAddName = <span class="literal">NO</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@&quot;__objc_classlist总结如下，共有%ld个\n%@：&quot;</span>, classListResults.count, classListResults);</span><br><span class="line">    <span class="keyword">return</span> classListResults;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然后怎么调试这个代码的正确与否？</p>
+<p>笔者这时候想到了借助<a target="_blank" rel="noopener" href="https://github.com/huanxsd/LinkMap">LinkMap</a>的UI，因为同样都是需要选择文件，读取文件，而且笔者也想做分析之后结果显示，外加最后输出结果到文件，一整套的逻辑。所以，笔者就想到了把<a target="_blank" rel="noopener" href="https://github.com/huanxsd/LinkMap">LinkMap</a>的内部实现改掉。</p>
+<p>首先第一步，注释掉<code>checkContent:</code>的判断，然后<code>analyze:</code>方法中把调用<code>symbolMapFromContent:</code>的地方改为调用<code>classListFromContent:</code>，断点调试看<code>classListFromContent:</code>方法是否正确？那如何判断这个方法是否正确呢？最简单的方法根据个数来，经过<code>classListFromContent:</code>得到的NSMutableDiction的数据的个数，和直接搜索<code>otool.txt</code>文件中<code>Contents of (__DATA_CONST,__objc_classlist) section</code>部分<code>000000010</code>的个数一致，就说明没有问题。具体如下：</p>
+<ul>
+<li><ol>
+<li>笔者把<code>otool.txt</code>文件中除去<code>Contents of (__DATA_CONST,__objc_classlist) section</code>部分删掉，然后搜索<code>000000010</code>看有多少个。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>运行LinkMap项目，选择otool.txt，然后断点看<code>classListFromContent:</code>方法的输出</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>两个结果个数一致，笔者认为代码运行正确。</li>
+</ol>
+</li>
+</ul>
+<p><strong>获取__objc_classrefs</strong></p>
+<p>来看<code>__objc_classrefs</code>所在的section</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="type">Contents</span> of (__DATA,__objc_classrefs) section</span><br><span class="line">000000010000d410 <span class="number">0x0</span> _OBJC_CLASS_<span class="variable">$_UIColor</span></span><br><span class="line">000000010000d418 <span class="number">0x10000d450</span></span><br><span class="line">000000010000d420 <span class="number">0x0</span> _OBJC_CLASS_<span class="variable">$_UISceneConfiguration</span></span><br><span class="line">000000010000d428 <span class="number">0x10000d568</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>同样，先来分析上述代码，可以看到单行信息中，后面的部分要不是系统信息，要不是类地址。如下：</p>
+<p><img src="https://i.loli.net/2021/05/11/jVdJS41eg2KOQHY.png" alt="WX20210511-194536.png"></p>
+<p>所以，笔者采取同样的处理逻辑，读取<code>Contents of (__DATA,__objc_classrefs) section</code>的内容，单行单行读取，判断如果包含<code>0x100</code>，说明是类地址，存储到数组里。实现如下</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="built_in">NSString</span> *kConstPrefix = <span class="string">@&quot;Contents of (__DATA&quot;</span>;</span><br><span class="line"><span class="keyword">static</span> <span class="built_in">NSString</span> *kQueryClassRefs = <span class="string">@&quot;__objc_classrefs&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取classrefs</span></span><br><span class="line">- (<span class="built_in">NSArray</span> *)classRefsFromContent:(<span class="built_in">NSString</span> *)content &#123;</span><br><span class="line">    <span class="comment">// 符号文件列表</span></span><br><span class="line">    <span class="built_in">NSArray</span> *lines = [content componentsSeparatedByString:<span class="string">@&quot;\n&quot;</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">NSMutableArray</span> *classRefsResults = [<span class="built_in">NSMutableArray</span> array];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">BOOL</span> classRefsBegin = <span class="literal">NO</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">NSString</span> *line <span class="keyword">in</span> lines) &#123;</span><br><span class="line">       <span class="keyword">if</span> ([line containsString:kConstPrefix] &amp;&amp; [line containsString:kQueryClassRefs]) &#123;</span><br><span class="line">            classRefsBegin = <span class="literal">YES</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (classRefsBegin &amp;&amp; [line containsString:kConstPrefix]) &#123;</span><br><span class="line">            classRefsBegin = <span class="literal">NO</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(classRefsBegin &amp;&amp; [line containsString:<span class="string">@&quot;000000010&quot;</span>]) &#123;</span><br><span class="line">            <span class="built_in">NSArray</span> *components = [line componentsSeparatedByString:<span class="string">@&quot; &quot;</span>];</span><br><span class="line">            <span class="built_in">NSString</span> *address = [components lastObject];</span><br><span class="line">            <span class="keyword">if</span> ([address hasPrefix:<span class="string">@&quot;0x100&quot;</span>]) &#123;</span><br><span class="line">                [classRefsResults addObject:address];            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@&quot;\n\n__objc_refs总结如下，共有%ld个\n%@：&quot;</span>, classRefsResults.count, classRefsResults);</span><br><span class="line">    <span class="keyword">return</span> classRefsResults;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然后校验上面方法的正确与否，去除除了<code>Contents of (__DATA,__objc_classrefs) section</code>的之外的内容，然后搜索<code>0x100</code>的个数，与<code>classRefsFromContent:</code>方法返回的个数对比，相同则说明方法无错误。</p>
+<p><strong>取差值，获取无用类</strong></p>
+<p>在LinkMap中的<code>analyze:</code>方法中，调用<code>classListFromContent:</code>和<code>classRefsFromContent:</code>，获取到了所有类和已引用类后，所有类存储是<code>&#123; classAddress: className &#125;</code>，已引用类存储的是<code>[classAddress]</code>，去重后，遍历去重后的已引用类，然后把所有在已引用的地址从所有类中移除。最后所有类中剩下的就是无用的类。代码如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    // 所有classList类和类名字</span><br><span class="line">    NSDictionary *classListDic = [self classListFromContent:content];</span><br><span class="line">    // 所有引用的类</span><br><span class="line">    NSArray *classRefs = [self classRefsFromContent:content];</span><br><span class="line">//        // 所有引用的父类</span><br><span class="line">//        NSArray *superRefs = [self superRefsFromContent:content];</span><br><span class="line">    </span><br><span class="line">    // 先把类和父类数组做去重</span><br><span class="line">    NSMutableSet *refsSet = [NSMutableSet setWithArray:classRefs];</span><br><span class="line">//        [refsSet addObjectsFromArray:superRefs];</span><br><span class="line">    </span><br><span class="line">    // 所有在refsSet中的都是已使用的，遍历classList，移除refsSet中涉及的类</span><br><span class="line">    // 余下的就是多余的类</span><br><span class="line">    for (NSString *address in refsSet.allObjects) &#123;</span><br><span class="line">        [classListDic setValue:nil forKey:address];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 移除系统类，比如SceneDelegate，或者Storyboard中的类</span><br><span class="line">    </span><br><span class="line">    NSLog(@&quot;多余的类如下：%@&quot;, classListDic);</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>最后测试输出结果如下，可以看到输出结果的结构，但是其中ViewController是Storyboard引用的，SceneDelegate是Info.plist文件中配置的，但是都被识别为无使用类。所以结果打印出来后，删除前需要确认。也可以在上面的获取差值代码中过滤指定的类。</p>
+<p><img src="https://i.loli.net/2021/05/12/r3EJgqmRUTzPInW.png" alt="WX20210512-084919.png"></p>
+<h4 id="分析无用方法"><a href="#分析无用方法" class="headerlink" title="分析无用方法"></a>分析无用方法</h4><p>无用方法的分析与类稍有不同，因为没有直接获取所有方法的地方，<code>__objc_selrefs</code>是所有引用到的方法，因此笔者想到的是，用<code>__objc_classlist</code>中的BaseMethods、InstanceMethods以及ClassMethods中的数据，作为所有方法的集合，然后和引用的方法做差值，最终得到无用方法。</p>
+<p><strong>获取__objc_selrefs</strong></p>
+<p>来看<code>__objc_selrefs</code>所在的section</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="type">Contents</span> of (__DATA,__objc_selrefs) section</span><br><span class="line">    <span class="number">0x100006647</span> <span class="type">Tapped</span>:</span><br><span class="line">    <span class="number">0x1000067e5</span> application:didFinishLaunchingWithOptions:</span><br><span class="line">    <span class="number">0x1000070f9</span> application:configurationForConnectingSceneSession:options:</span><br><span class="line">    <span class="number">0x100007135</span> application:didDiscardSceneSessions:</span><br><span class="line">    <span class="number">0x10000717d</span> scene:willConnectToSession:options:</span><br><span class="line">    <span class="number">0x1000071a1</span> sceneDidDisconnect:</span><br><span class="line">    <span class="number">0x1000071b5</span> sceneDidBecomeActive:</span><br><span class="line">    <span class="number">0x1000071cb</span> sceneWillResignActive:</span><br><span class="line">    <span class="number">0x1000071e2</span> sceneWillEnterForeground:</span><br><span class="line">    <span class="number">0x1000071fc</span> sceneDidEnterBackground:</span><br><span class="line">    <span class="number">0x10000715a</span> window</span><br><span class="line">    <span class="number">0x100007161</span> setWindow:</span><br><span class="line">    <span class="number">0x10000739d</span> .cxx_destruct</span><br><span class="line">    <span class="number">0x1000065e4</span> viewDidLoad</span><br><span class="line">    <span class="number">0x1000065f0</span> purpleColor</span><br><span class="line">    <span class="number">0x1000065fc</span> view</span><br><span class="line">    <span class="number">0x100006601</span> setBackgroundColor:</span><br><span class="line">    <span class="number">0x100006615</span> navigationController</span><br><span class="line">    <span class="number">0x10000662a</span> pushViewController:animated:</span><br><span class="line">    <span class="number">0x10000664f</span> role</span><br><span class="line">    <span class="number">0x100006654</span> initWithName:sessionRole:</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>可以看到，这部分的数据比较简单，前面是地址，后面是方法名字，这里遍历每一行数据，然后直接以<code>&#123; methodAddress: methodName &#125;</code>的方式存起来。代码如下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="built_in">NSString</span> *kConstPrefix = <span class="string">@&quot;Contents of (__DATA&quot;</span>;</span><br><span class="line"><span class="keyword">static</span> <span class="built_in">NSString</span> *kQuerySelRefs = <span class="string">@&quot;__objc_selrefs&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取已使用的方法集合</span></span><br><span class="line">- (<span class="built_in">NSMutableDictionary</span> *)selRefsFromContent:(<span class="built_in">NSString</span> *)content &#123;</span><br><span class="line">    <span class="comment">// 符号文件列表</span></span><br><span class="line">    <span class="built_in">NSArray</span> *lines = [content componentsSeparatedByString:<span class="string">@&quot;\n&quot;</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">NSMutableDictionary</span> *selRefsResults = [<span class="built_in">NSMutableDictionary</span> dictionary];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">BOOL</span> selRefsBegin = <span class="literal">NO</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">NSString</span> *line <span class="keyword">in</span> lines) &#123;</span><br><span class="line">       <span class="keyword">if</span> ([line containsString:kConstPrefix] &amp;&amp; [line containsString:kQuerySelRefs]) &#123;</span><br><span class="line">           selRefsBegin = <span class="literal">YES</span>;</span><br><span class="line">            <span class="keyword">continue</span>;;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (selRefsBegin &amp;&amp; [line containsString:kConstPrefix]) &#123;</span><br><span class="line">            selRefsBegin = <span class="literal">NO</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(selRefsBegin) &#123;</span><br><span class="line">            <span class="built_in">NSArray</span> *components = [line componentsSeparatedByString:<span class="string">@&quot; &quot;</span>];</span><br><span class="line">            <span class="keyword">if</span> (components.count &gt; <span class="number">2</span>) &#123;</span><br><span class="line">                <span class="built_in">NSString</span> *methodName = [components lastObject];</span><br><span class="line">                <span class="built_in">NSString</span> *methodAddress = components[components.count - <span class="number">2</span>];</span><br><span class="line">                [selRefsResults setValue:methodName forKey:methodAddress];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@&quot;\n\n__objc_selrefs总结如下，共有%ld个\n%@：&quot;</span>, selRefsResults.count, selRefsResults);</span><br><span class="line">    <span class="keyword">return</span> selRefsResults;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>获取所有方法列表</strong></p>
+<p>这部分稍有麻烦，笔者想的是用<code>__objc_classlist</code>中的BaseMethods、InstanceMethods以及ClassMethods中的数据，作为所有方法的集合，所以先来看文件结构，总结出来规律</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">00000001007c1c20 <span class="number">0x100935c98</span></span><br><span class="line">    isa        <span class="number">0x100935c70</span></span><br><span class="line">    superclass <span class="number">0x0</span> _OBJC_CLASS_<span class="variable">$_NSObject</span></span><br><span class="line">    cache      <span class="number">0x0</span> __objc_empty_cache</span><br><span class="line">    vtable     <span class="number">0x0</span></span><br><span class="line">    data       <span class="number">0x1007c4fc8</span></span><br><span class="line">        flags          <span class="number">0x90</span></span><br><span class="line">        instanceStart  <span class="number">8</span></span><br><span class="line">        instanceSize   <span class="number">8</span></span><br><span class="line">        reserved       <span class="number">0x0</span></span><br><span class="line">        ivarLayout     <span class="number">0x0</span></span><br><span class="line">        name           <span class="number">0x1006fb54a</span> <span class="type">ColorManager</span></span><br><span class="line">        baseMethods    <span class="number">0x0</span></span><br><span class="line">        baseProtocols  <span class="number">0x0</span></span><br><span class="line">        ivars          <span class="number">0x0</span></span><br><span class="line">        weakIvarLayout <span class="number">0x0</span></span><br><span class="line">        baseProperties <span class="number">0x0</span></span><br><span class="line"><span class="type">Meta</span> <span class="type">Class</span></span><br><span class="line">    isa        <span class="number">0x0</span> _OBJC_METACLASS_<span class="variable">$_NSObject</span></span><br><span class="line">    superclass <span class="number">0x0</span> _OBJC_METACLASS_<span class="variable">$_NSObject</span></span><br><span class="line">    cache      <span class="number">0x0</span> __objc_empty_cache</span><br><span class="line">    vtable     <span class="number">0x0</span></span><br><span class="line">    data       <span class="number">0x1007c4f80</span></span><br><span class="line">        flags          <span class="number">0x91</span> <span class="type">RO_META</span></span><br><span class="line">        instanceStart  <span class="number">40</span></span><br><span class="line">        instanceSize   <span class="number">40</span></span><br><span class="line">        reserved       <span class="number">0x0</span></span><br><span class="line">        ivarLayout     <span class="number">0x0</span></span><br><span class="line">        name           <span class="number">0x1006fb54a</span> <span class="type">ColorManager</span></span><br><span class="line">        baseMethods    <span class="number">0x1007c4f18</span></span><br><span class="line">            entsize <span class="number">24</span></span><br><span class="line">            count   <span class="number">4</span></span><br><span class="line">            name    <span class="number">0x100689e19</span> primaryTextColor</span><br><span class="line">            types   <span class="number">0x1007038cd</span> @<span class="number">16</span>@<span class="number">0</span>:<span class="number">8</span></span><br><span class="line">            imp     <span class="number">0x100004810</span></span><br><span class="line">            name    <span class="number">0x100689e2a</span> secondaryTextColor</span><br><span class="line">            types   <span class="number">0x1007038cd</span> @<span class="number">16</span>@<span class="number">0</span>:<span class="number">8</span></span><br><span class="line">            imp     <span class="number">0x10000482c</span></span><br><span class="line">            name    <span class="number">0x100689e3d</span> primaryTintColor</span><br><span class="line">            types   <span class="number">0x1007038cd</span> @<span class="number">16</span>@<span class="number">0</span>:<span class="number">8</span></span><br><span class="line">            imp     <span class="number">0x100004848</span></span><br><span class="line">            name    <span class="number">0x100689e4e</span> backgroundColor</span><br><span class="line">            types   <span class="number">0x1007038cd</span> @<span class="number">16</span>@<span class="number">0</span>:<span class="number">8</span></span><br><span class="line">            imp     <span class="number">0x100004878</span></span><br><span class="line">        baseProtocols  <span class="number">0x0</span></span><br><span class="line">        ivars          <span class="number">0x0</span></span><br><span class="line">        weakIvarLayout <span class="number">0x0</span></span><br><span class="line">        baseProperties <span class="number">0x0</span></span><br><span class="line">00000001007c1c28 <span class="number">0x100935ce8</span></span><br><span class="line">    isa        <span class="number">0x100935cc0</span></span><br><span class="line">    superclass <span class="number">0x0</span> _OBJC_CLASS_<span class="variable">$_NSObject</span></span><br><span class="line">    cache      <span class="number">0x0</span> __objc_empty_cache</span><br><span class="line">    vtable     <span class="number">0x0</span></span><br><span class="line">    data       <span class="number">0x1007c5648</span></span><br><span class="line">        flags          <span class="number">0x194</span> <span class="type">RO_HAS_CXX_STRUCTORS</span></span><br><span class="line">        instanceStart  <span class="number">8</span></span><br><span class="line">        instanceSize   <span class="number">152</span></span><br><span class="line">        reserved       <span class="number">0x0</span></span><br><span class="line">        ivarLayout     <span class="number">0x1006fb56a</span></span><br><span class="line">        layout map     <span class="number">0x15</span> <span class="number">0x21</span> <span class="number">0x12</span> </span><br><span class="line">        name           <span class="number">0x1006fb55a</span> <span class="type">SectionModel</span></span><br><span class="line">        baseMethods    <span class="number">0x1007c5078</span></span><br><span class="line">            entsize <span class="number">24</span></span><br><span class="line">            count   <span class="number">31</span></span><br><span class="line">            name    <span class="number">0x100689eac</span> groupName</span><br><span class="line">            types   <span class="number">0x1007038cd</span> @<span class="number">16</span>@<span class="number">0</span>:<span class="number">8</span></span><br><span class="line">            imp     <span class="number">0x100004948</span></span><br><span class="line">            name    <span class="number">0x100689eb6</span> setGroupName:</span><br><span class="line">            types   <span class="number">0x1007038d5</span> v24@<span class="number">0</span>:<span class="number">8</span>@<span class="number">16</span></span><br><span class="line">            imp     <span class="number">0x100004954</span></span><br><span class="line">            name    <span class="number">0x100689ec4</span> name</span><br><span class="line">            types   <span class="number">0x1007038cd</span> @<span class="number">16</span>@<span class="number">0</span>:<span class="number">8</span></span><br><span class="line">            imp     <span class="number">0x10000495c</span></span><br><span class="line">            name    <span class="number">0x100689ec9</span> setName:</span><br><span class="line">            types   <span class="number">0x1007038d5</span> v24@<span class="number">0</span>:<span class="number">8</span>@<span class="number">16</span></span><br><span class="line">            imp     <span class="number">0x100004968</span></span><br><span class="line">            name    <span class="number">0x100689ed2</span> menuId</span><br><span class="line">            types   <span class="number">0x1007038cd</span> @<span class="number">16</span>@<span class="number">0</span>:<span class="number">8</span></span><br><span class="line">            imp     <span class="number">0x100004970</span></span><br><span class="line">            name    <span class="number">0x100689ed9</span> setMenuId:</span><br><span class="line">            types   <span class="number">0x1007038d5</span> v24@<span class="number">0</span>:<span class="number">8</span>@<span class="number">16</span></span><br><span class="line"><span class="operator">...</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>上面的文件能看出来什么规律？脑壳疼，笔者想获取的是BaseMethods后面的name行的数据，而且笔者还希望能把这个方法跟类关联起来，这样最后输出查找的时候也比较方便。</p>
+<p><img src="https://i.loli.net/2021/05/12/546LptyM28FsNYq.png" alt="WX20210512-103154.png"></p>
+<p>笔者总结出来的规律如下</p>
+<ul>
+<li><ol>
+<li>按照一行行的读取逻辑来，读到了data，然后读到了name，这时候name是类名字。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>再接着往下读，读到了baseMethods或者InstanceMethods或者Class Methods，再然后读到了name，这时候name中是方法名字和方法地址。</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>再接着往下读，读到了data，重复步骤1</li>
+</ol>
+</li>
+</ul>
+<p>用代码逻辑实现就是，设置两个标志位，一个标记是类名，一个标记是方法；读到了data之后，把第一个标记置为YES，然后判断第一个标记位YES时，读到了name就更新类名；读到了包含Methods之后，把第一个标记置为NO，第二个标记置为YES，然后判断是第二个标记位YES时，就存储方法名和方法地址。最终数据以<code>&#123; className:&#123; address: methodName &#125; &#125;</code>存储。代码如下</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="built_in">NSString</span> *kConstPrefix = <span class="string">@&quot;Contents of (__DATA&quot;</span>;</span><br><span class="line"><span class="keyword">static</span> <span class="built_in">NSString</span> *kQueryClassList = <span class="string">@&quot;__objc_classlist&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取所有方法集合 &#123; className:&#123; address: methodName &#125; &#125;</span></span><br><span class="line">- (<span class="built_in">NSMutableDictionary</span> *)allSelRefsFromContent:(<span class="built_in">NSString</span> *)content &#123;</span><br><span class="line">    <span class="comment">// 符号文件列表</span></span><br><span class="line">    <span class="built_in">NSArray</span> *lines = [content componentsSeparatedByString:<span class="string">@&quot;\n&quot;</span>];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSMutableDictionary</span> *allSelResults = [<span class="built_in">NSMutableDictionary</span> dictionary];</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">BOOL</span> allSelResultsBegin = <span class="literal">NO</span>;</span><br><span class="line">    <span class="built_in">BOOL</span> canAddName = <span class="literal">NO</span>;</span><br><span class="line">    <span class="built_in">BOOL</span> canAddMethods = <span class="literal">NO</span>;</span><br><span class="line">    <span class="built_in">NSString</span> *className = <span class="string">@&quot;&quot;</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">NSMutableDictionary</span> *methodDic = [<span class="built_in">NSMutableDictionary</span> dictionary];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">NSString</span> *line <span class="keyword">in</span> lines) &#123;</span><br><span class="line">        <span class="keyword">if</span> ([line containsString:kConstPrefix] &amp;&amp; [line containsString:kQueryClassList]) &#123;</span><br><span class="line">            allSelResultsBegin = <span class="literal">YES</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (allSelResultsBegin &amp;&amp; [line containsString:kConstPrefix]) &#123;</span><br><span class="line">            allSelResultsBegin = <span class="literal">NO</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (allSelResultsBegin) &#123;</span><br><span class="line">            <span class="keyword">if</span> ([line containsString:<span class="string">@&quot;data&quot;</span>]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (methodDic.count &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    [allSelResults setValue:methodDic forKey:className];</span><br><span class="line">                    methodDic = [<span class="built_in">NSMutableDictionary</span> dictionary];</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">// data之后第一个的name，是类名</span></span><br><span class="line">                canAddName = <span class="literal">YES</span>;</span><br><span class="line">                canAddMethods = <span class="literal">NO</span>;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (canAddName &amp;&amp; [line containsString:<span class="string">@&quot;name&quot;</span>]) &#123;</span><br><span class="line">                <span class="comment">// 更新类名，用作标记&#123; className:&#123; address: methodName &#125; &#125;</span></span><br><span class="line">                <span class="built_in">NSArray</span> *components = [line componentsSeparatedByString:<span class="string">@&quot; &quot;</span>];</span><br><span class="line">                className = [components lastObject];</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> ([line containsString:<span class="string">@&quot;methods&quot;</span>] || [line containsString:<span class="string">@&quot;Methods&quot;</span>]) &#123;</span><br><span class="line">                <span class="comment">// method之后的name是方法名，和方法地址</span></span><br><span class="line">                canAddName = <span class="literal">NO</span>;</span><br><span class="line">                canAddMethods = <span class="literal">YES</span>;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (canAddMethods &amp;&amp; [line containsString:<span class="string">@&quot;name&quot;</span>]) &#123;</span><br><span class="line">                <span class="built_in">NSArray</span> *components = [line componentsSeparatedByString:<span class="string">@&quot; &quot;</span>];</span><br><span class="line">                <span class="keyword">if</span> (components.count &gt; <span class="number">2</span>) &#123;</span><br><span class="line">                    <span class="built_in">NSString</span> *methodAddress = components[components.count<span class="number">-2</span>];</span><br><span class="line">                    <span class="built_in">NSString</span> *methodName = [components lastObject];</span><br><span class="line">                    [methodDic setValue:methodName forKey:methodAddress];</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> allSelResults;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>取差值，获取无用方法</strong></p>
+<p>在LinkMap中的<code>analyze:</code>方法中，调用<code>allSelRefsFromContent:</code>和<code>selRefsFromContent:</code>，获取到了所有方法和已引用方法后，所有方法存储是<code>&#123; className:&#123; address: methodName &#125; &#125;</code>，已引用方法存储的是<code>&#123; methodAddress: methodName &#125;</code>，遍历去重后的已引用方法，然后把所有在已引用的地址从所有方法中移除。最后所有方法中剩下的就是无用的方法。代码如下</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">NSMutableDictionary</span> *methodsListDic = [<span class="keyword">self</span> allSelRefsFromContent:content];</span><br><span class="line"><span class="built_in">NSMutableDictionary</span> *selRefsDic = [<span class="keyword">self</span> selRefsFromContent:content];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 遍历selRefs移除methodsListDic，剩下的就是未使用的</span></span><br><span class="line"><span class="keyword">for</span> (<span class="built_in">NSString</span> *methodAddress <span class="keyword">in</span> selRefsDic.allKeys) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">NSDictionary</span> *methodDic <span class="keyword">in</span> methodsListDic.allValues) &#123;</span><br><span class="line">        [methodDic setValue:<span class="literal">nil</span> forKey:methodAddress];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 遍历移除空的元素</span></span><br><span class="line"><span class="built_in">NSMutableDictionary</span> *resultDic = [<span class="built_in">NSMutableDictionary</span> dictionary];</span><br><span class="line"><span class="keyword">for</span> (<span class="built_in">NSString</span> *classNameStr <span class="keyword">in</span> methodsListDic.allKeys) &#123;</span><br><span class="line">    <span class="built_in">NSDictionary</span> *methodDic = [methodsListDic valueForKey:classNameStr];</span><br><span class="line">    <span class="keyword">if</span> (methodDic.count &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        [resultDic setValue:methodDic forKey:classNameStr];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@&quot;多余的方法如下%@&quot;</span>, resultDic);</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>最后测试输出结果如下，可以看到输出结果的结构，其中AppDelegate和SceneDelegate的代理方法被识别为了多余方法。所以结果打印出来后，删除前需要确认。也可以在上面的获取差值代码中过滤指定的代理方法。</p>
+<p><img src="https://i.loli.net/2021/05/12/xSdk3uiNmGBohrE.png" alt="WX20210512-101907.png"></p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>完整的项目地址<a target="_blank" rel="noopener" href="https://github.com/mokong/OtoolAnalyse">OtoolAnalyse</a>，笔者用这样方法，分析出来了项目中无用的类、无用的方法，删除前要注意先确认。项目还有待完善的地方，比如系统方法的过滤，基类的判断逻辑，等等，留待后续补充。但整体分析的逻辑如上，笔者趟过了河，先分享为敬，😄。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.z6z8.cn/2021/04/01/otool-%E5%B7%A5%E5%85%B7%E5%88%86%E6%9E%90%E5%8F%AF%E8%83%BD%E6%B2%A1%E6%9C%89%E4%BD%BF%E7%94%A8%E7%9A%84objective-c%E7%B1%BB/">otool 工具分析可能没有使用的Objective-C类</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/huanxsd/LinkMap">LinkMap</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/52e0dee35830">iOS调优 | 深入理解Link Map File</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/8f3d3f6b6af8">iOS堆栈信息解析（Mach-O）</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zybuluo.com/qidiandasheng/note/1662385">包体积大小：瘦身</a></li>
+<li><a target="_blank" rel="noopener" href="https://elliotsomething.github.io/2017/06/01/Mach-O%E5%AD%A6%E4%B9%A0/">Mach-O学习</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.desgard.com/iOS-Source-Probe/C/mach-o/Mach-O%20%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E6%8E%A2%E7%B4%A2.html">Mach-O 文件格式探索</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/a8c2360760ae">二进制文件分析之常用命令</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903921169727496">iOS代码瘦身实践:删除无用的类</a></li>
+</ul>
+
       
 
       
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/07/iOS%2013%20%E9%80%82%E9%85%8D/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-ProtocolBuf Swift 使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/06/ProtocolBuf%20Swift%20%E4%BD%BF%E7%94%A8/">ProtocolBuf Swift 使用</a>
-    </h1>
-  
-
-        
-        <a href="/2019/10/06/ProtocolBuf%20Swift%20%E4%BD%BF%E7%94%A8/" class="archive-article-date">
-  	<time datetime="2019-10-06T02:57:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="ProtocolBuf-Swift-使用"><a href="#ProtocolBuf-Swift-使用" class="headerlink" title="ProtocolBuf Swift 使用"></a>ProtocolBuf Swift 使用</h2><h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3><p>Mac安装<a target="_blank" rel="noopener" href="https://github.com/apple/swift-protobuf">swift-protobuf</a></p>
-        
-          <a class="article-more-a" href="/2019/10/06/ProtocolBuf%20Swift%20%E4%BD%BF%E7%94%A8/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/06/ProtocolBuf%20Swift%20%E4%BD%BF%E7%94%A8/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Mapping architecture armv7 to i386" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/28/Mapping%20architecture%20armv7%20to%20i386/">Mapping architecture armv7 to i386</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/28/Mapping%20architecture%20armv7%20to%20i386/" class="archive-article-date">
-  	<time datetime="2019-09-28T02:57:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近项目里升级后，编译警告多了起来，看起来好碍眼，就想着改掉，先从Debug warning: Mapping architecture armv7 to i386.这个开始。</p>
-        
-          <a class="article-more-a" href="/2019/09/28/Mapping%20architecture%20armv7%20to%20i386/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/28/Mapping%20architecture%20armv7%20to%20i386/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Embedded binary is not signed with the same certificate as the parent app" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/28/Embedded%20binary%20is%20not%20signed%20with%20the%20same%20certificate%20as%20the%20parent%20app/">Embedded binary is not signed with the same certificate as the parent app</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/28/Embedded%20binary%20is%20not%20signed%20with%20the%20same%20certificate%20as%20the%20parent%20app/" class="archive-article-date">
-  	<time datetime="2019-09-27T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Embedded-binary-is-not-signed-with-the-same-certificate-as-the-parent-app"><a href="#Embedded-binary-is-not-signed-with-the-same-certificate-as-the-parent-app" class="headerlink" title="Embedded binary is not signed with the same certificate as the parent app"></a>Embedded binary is not signed with the same certificate as the parent app</h2><h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>Xcode 10之后New Build System变为默认，编译之后一直报错，<br>报错信息：Embedded binary is not signed with the same certificate as the parent app. Verify the embedded binary target’s code sign settings match the parent app’s.</p>
-        
-          <a class="article-more-a" href="/2019/09/28/Embedded%20binary%20is%20not%20signed%20with%20the%20same%20certificate%20as%20the%20parent%20app/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/28/Embedded%20binary%20is%20not%20signed%20with%20the%20same%20certificate%20as%20the%20parent%20app/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-批量图片压缩 &amp; 替换" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/15/%E6%89%B9%E9%87%8F%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%20&%20%E6%9B%BF%E6%8D%A2/">批量图片压缩 &amp; 替换</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/15/%E6%89%B9%E9%87%8F%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%20&%20%E6%9B%BF%E6%8D%A2/" class="archive-article-date">
-  	<time datetime="2019-09-14T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="批量图片压缩-amp-替换"><a href="#批量图片压缩-amp-替换" class="headerlink" title="批量图片压缩 &amp; 替换"></a>批量图片压缩 &amp; 替换</h2><h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>最近产品提了个需求，要求把包压缩一下，而项目是OC&amp;Swift混编，这期还加上了RN，还要包不能增大。脑壳疼。。。。他则不上天呢。但需求出来了，还是要做的。所以就想了下面几个方法：</p>
-        
-          <a class="article-more-a" href="/2019/09/15/%E6%89%B9%E9%87%8F%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%20&%20%E6%9B%BF%E6%8D%A2/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/15/%E6%89%B9%E9%87%8F%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%20&%20%E6%9B%BF%E6%8D%A2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-CocoaPods私有库生成" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/08/CocoaPods%E7%A7%81%E6%9C%89%E5%BA%93%E7%94%9F%E6%88%90/">CocoaPods私有库生成</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/08/CocoaPods%E7%A7%81%E6%9C%89%E5%BA%93%E7%94%9F%E6%88%90/" class="archive-article-date">
-  	<time datetime="2019-09-08T02:57:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="CocoaPods私有库生成"><a href="#CocoaPods私有库生成" class="headerlink" title="CocoaPods私有库生成"></a>CocoaPods私有库生成</h2>
-      
-
       
     </div>
     <div class="article-info article-info-index">
@@ -762,16 +561,84 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/08/CocoaPods%E7%A7%81%E6%9C%89%E5%BA%93%E7%94%9F%E6%88%90/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2021/05/12/iOS%20mach-o%E6%96%87%E4%BB%B6%E5%88%86%E6%9E%90%E5%A4%9A%E4%BD%99%E7%9A%84%E7%B1%BB%E5%92%8C%E6%96%B9%E6%B3%95/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2021/05/13/%E5%A6%82%E4%BD%95%E8%AE%A9iOS%E6%8E%A8%E9%80%81%E6%92%AD%E6%94%BE%E8%AF%AD%E9%9F%B3/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          如何让iOS推送播放语音
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/05/06/iOS%20%E6%B7%BB%E5%8A%A0%E6%A1%8C%E9%9D%A2%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">iOS APP添加桌面快捷方式</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -791,165 +658,14 @@
 
 
 
-
-  
-    <article id="post-一个诡异线上Bug的修改" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/08/%E4%B8%80%E4%B8%AA%E8%AF%A1%E5%BC%82%E7%BA%BF%E4%B8%8ABug%E7%9A%84%E4%BF%AE%E6%94%B9/">一个诡异线上Bug的修改</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/08/%E4%B8%80%E4%B8%AA%E8%AF%A1%E5%BC%82%E7%BA%BF%E4%B8%8ABug%E7%9A%84%E4%BF%AE%E6%94%B9/" class="archive-article-date">
-  	<time datetime="2019-09-08T02:57:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="一个诡异线上Bug的修改"><a href="#一个诡异线上Bug的修改" class="headerlink" title="一个诡异线上Bug的修改"></a>一个诡异线上Bug的修改</h2>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/08/%E4%B8%80%E4%B8%AA%E8%AF%A1%E5%BC%82%E7%BA%BF%E4%B8%8ABug%E7%9A%84%E4%BF%AE%E6%94%B9/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-iOS-IconFont的使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/02/iOS-IconFont%E7%9A%84%E4%BD%BF%E7%94%A8/">iOS使用IconFont</a>
-    </h1>
-  
-
-        
-        <a href="/2019/05/02/iOS-IconFont%E7%9A%84%E4%BD%BF%E7%94%A8/" class="archive-article-date">
-  	<time datetime="2019-05-02T07:20:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="IconFont的使用"><a href="#IconFont的使用" class="headerlink" title="IconFont的使用"></a><a target="_blank" rel="noopener" href="https://github.com/mokong/IconFont"><strong>IconFont的使用</strong></a></h2><h3 id="github链接"><a href="#github链接" class="headerlink" title="github链接"></a><a target="_blank" rel="noopener" href="https://github.com/mokong/IconFont">github链接</a></h3><h3 id="背景：-最近设计提了要求，切图用IconFont"><a href="#背景：-最近设计提了要求，切图用IconFont" class="headerlink" title="背景： 最近设计提了要求，切图用IconFont"></a>背景： 最近设计提了要求，切图用IconFont</h3><p>一开始，在搜了IconFont的使用后，选中了TBCityIconFont，使用了之后，发现对于图片的支持不太好，就是长宽不等的图片，显示的时候会被截断，在具体实现里也没发现修改的地方。</p>
-        
-          <a class="article-more-a" href="/2019/05/02/iOS-IconFont%E7%9A%84%E4%BD%BF%E7%94%A8/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/02/iOS-IconFont%E7%9A%84%E4%BD%BF%E7%94%A8/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&lt;&lt; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">Next &gt;&gt;</a>
-    </nav>
+  
+
+  
+
+  
+
   
 
 
@@ -972,8 +688,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
